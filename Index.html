@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unlock Your Future</title>
+<style>
+:root{--bg:#060a18;--panel:#0e1631;--panel2:#141f45;--line:#25366a;--text:#eaf0ff;--muted:#9fb0dc;--cyan:#3be3ff;--mag:#ff5ad9;--lime:#6dffa0;--amber:#ffcb52;--red:#ff7486;--violet:#a796ff;--acc:#3be3ff;--fs:17px}
+html{font-size:var(--fs);-webkit-text-size-adjust:100%}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.5;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:
+ radial-gradient(ellipse at 15% -10%,color-mix(in srgb,var(--acc) 22%,transparent),transparent 55%),
+ radial-gradient(ellipse at 105% 110%,rgba(255,90,217,.13),transparent 50%),
+ linear-gradient(rgba(59,227,255,.045) 1px,transparent 1px) 0 0/44px 44px,
+ linear-gradient(90deg,rgba(59,227,255,.045) 1px,transparent 1px) 0 0/44px 44px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+[tabindex="-1"]:focus{outline:none}
+.mono{font-family:ui-monospace,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace}
+.small{font-size:.85rem}.muted{color:var(--muted)}.center{text-align:center}
+[hidden]{display:none!important}
+
+/* HUD */
+#hud{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(6,10,24,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.2em;font-size:.72rem;color:var(--cyan);white-space:nowrap}
+.brand b{color:var(--mag)}
+#hudAgent{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.hud-mid{flex:1;display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:0}
+#hudProg{display:flex;gap:5px;width:min(240px,30vw)}
+.hud-seg{flex:1;height:8px;border-radius:4px;background:#1b2754}
+.hud-seg.done{background:linear-gradient(90deg,var(--cyan),var(--lime));box-shadow:0 0 8px rgba(59,227,255,.6)}
+.hud-seg.cur{background:var(--acc);opacity:.55;animation:pulse 1.6s infinite}
+#hudLabel{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.tools{display:flex;gap:6px}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:.8rem;min-height:38px;white-space:nowrap}
+.tool:hover{border-color:var(--acc)}
+.tool[aria-pressed="true"]{background:var(--acc);color:#04101c;border-color:var(--acc)}
+
+main#app{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:28px 20px 130px}
+h1,h2,h3{line-height:1.2;margin:.2em 0 .4em}
+h1{font-size:2.2rem;letter-spacing:-.01em}
+h2{font-size:1.6rem}
+.eyebrow{font-size:.72rem;letter-spacing:.22em;color:var(--acc);font-weight:700}
+.lead{font-size:1.12rem;color:#cdd7f5;max-width:720px}
+.sub{color:var(--muted);margin:.2em 0 1.1em}
+.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:20px}
+
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:12px 20px;font-weight:700;min-height:48px}
+.btn:hover:not(:disabled){border-color:var(--acc)}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#03101b;box-shadow:0 0 22px color-mix(in srgb,var(--acc) 45%,transparent)}
+.btn.primary:disabled{background:#26345e;border-color:#26345e;color:#7d8bb5;box-shadow:none}
+.btn.ghost{background:transparent}
+.btn.big{font-size:1.1rem;padding:15px 28px}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;padding:8px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+
+/* Title */
+.title{text-align:center;padding-top:10px}
+.title .lead{margin:0 auto 14px}
+.lock-art{width:150px;height:150px;margin:0 auto 6px;filter:drop-shadow(0 0 20px rgba(59,227,255,.45))}
+.lock-art svg{width:100%;height:100%}
+.spin{transform-origin:100px 100px;animation:spin 30s linear infinite}
+.glitch{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--cyan),#fff 45%,var(--mag));-webkit-background-clip:text;background-clip:text;color:transparent;margin:.1em 0 .3em}
+.rules{list-style:none;padding:0;margin:18px auto;display:grid;gap:10px;max-width:640px;text-align:left}
+.rules li{background:rgba(14,22,49,.8);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.rules b{color:var(--lime)}
+.login{max-width:480px;margin:22px auto 10px;text-align:left;display:grid;gap:12px}
+.field{display:grid;gap:6px}
+.field>span{font-size:.85rem;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.tb{width:100%;background:#070d22;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit;resize:vertical}
+.tb:focus{border-color:var(--acc);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 30%,transparent)}
+.err{color:var(--red);font-weight:600;min-height:1.2em}
+.fine{color:var(--muted);font-size:.85rem}
+
+/* Hub */
+.keybar{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:18px 0 22px}
+.keys{display:flex;gap:8px}
+.keyslot{width:46px;height:54px;border-radius:10px;border:2px dashed #34477f;display:grid;place-items:center;font:900 1.5rem ui-monospace,monospace;color:#3a4c80}
+.keyslot.got{border:2px solid var(--lime);color:var(--lime);background:rgba(109,255,160,.08);box-shadow:0 0 14px rgba(109,255,160,.35)}
+.bigbar{flex:1;min-width:160px;height:12px;border-radius:6px;background:#1b2754;overflow:hidden}
+.bigbar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--lime));transition:width .8s}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.mtile{--mc:var(--cyan);text-align:left;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:18px;position:relative;overflow:hidden;transition:transform .15s,border-color .15s}
+.mtile::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 0,color-mix(in srgb,var(--mc) 25%,transparent),transparent 55%);pointer-events:none}
+.mtile.open{border-color:var(--mc);box-shadow:0 0 24px color-mix(in srgb,var(--mc) 30%,transparent)}
+.mtile.open:hover,.mtile.done:hover{transform:translateY(-3px)}
+.mtile.done{border-color:color-mix(in srgb,var(--lime) 60%,var(--line))}
+.mtile.locked{opacity:.5;filter:grayscale(.7)}
+.mt-top{display:flex;justify-content:space-between;gap:8px;font-size:.7rem;letter-spacing:.14em}
+.mt-code{color:var(--mc)}
+.mtile.done .mt-status{color:var(--lime)}
+.mtile.open .mt-status{color:var(--mc)}
+.mt-icon{font-size:2.4rem;margin:8px 0 2px}
+.mtile h3{font-size:1.25rem;margin:4px 0}
+.mtile p{margin:0 0 10px;color:#cdd7f5}
+.mt-foot{color:var(--muted)}
+.teacher-link{text-align:center;margin-top:30px}
+
+/* Mission */
+.mhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.mh-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chip-code{font-size:.7rem;letter-spacing:.18em;border:1px solid var(--acc);color:var(--acc);border-radius:20px;padding:3px 10px}
+.mh-name{font-weight:800}
+.dots{display:flex;gap:6px}
+.dot{width:22px;height:6px;border-radius:3px;background:#24325e}
+.dot.done{background:var(--acc);opacity:.6}.dot.cur{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.prompt{font-size:1.6rem}
+.stage{animation:rise .35s ease-out}
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(6,10,24,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+.navin{max-width:1000px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.hint{flex:1;text-align:right;color:var(--amber)}
+
+.intro{max-width:720px}
+.intro-icon{font-size:3.4rem;filter:drop-shadow(0 0 16px var(--acc))}
+.intro p{font-size:1.12rem;color:#d6def7}
+.brief{list-style:none;padding:0;display:grid;gap:8px;margin-top:18px}
+.brief li{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;padding:10px 14px;background:rgba(14,22,49,.7)}
+.brief li::before{content:"▸ ";color:var(--acc);font-weight:900}
+
+.grid{display:grid;gap:12px}
+.grid.cards{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.grid.tiles{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.opt{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:4px;position:relative;transition:border-color .12s,transform .12s,background .12s}
+.opt:hover{border-color:color-mix(in srgb,var(--acc) 60%,var(--line))}
+.opt .ic{font-size:1.6rem}
+.opt .desc{color:var(--muted);font-size:.92rem}
+.opt[aria-pressed="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel));box-shadow:0 0 18px color-mix(in srgb,var(--acc) 30%,transparent)}
+.opt[aria-pressed="true"]::after{content:"✓";position:absolute;top:10px;right:12px;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#03101b;font-weight:900;display:grid;place-items:center}
+.tiles .opt{grid-template-columns:auto 1fr;align-items:center;gap:10px;padding:12px}
+.tiles .opt .ic{font-size:1.4rem}
+.counter{display:inline-block;font-weight:700;margin-bottom:12px;padding:4px 12px;border-radius:20px;background:var(--panel);border:1px solid var(--line)}
+.counter.flash{animation:shake .4s;border-color:var(--amber);color:var(--amber)}
+.other{margin-top:16px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{background:#0a1430;border:1px solid var(--line);border-radius:22px;padding:7px 14px;font-size:.9rem}
+.chip:hover{border-color:var(--acc)}
+.chip[aria-pressed="true"]{background:var(--acc);color:#03101b;border-color:var(--acc);font-weight:700}
+.chips.big .chip{padding:11px 18px;font-size:1rem;border-radius:14px;min-height:46px;text-align:left}
+.exbox{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;padding:16px;margin-bottom:14px}
+.exhead{font-size:1.15rem}
+
+/* meters */
+.meters{display:grid;gap:10px}
+.meter{display:grid;grid-template-columns:minmax(150px,1.2fr) auto 90px;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.segs{display:flex;gap:5px}
+.seg{width:44px;height:34px;border-radius:7px;border:1px solid #33467e;background:#0a1430;padding:0}
+.seg.on{background:linear-gradient(180deg,var(--acc),color-mix(in srgb,var(--acc) 50%,#000));border-color:var(--acc);box-shadow:0 0 8px color-mix(in srgb,var(--acc) 50%,transparent)}
+.meter-val{font-weight:700;color:var(--acc);font-size:.9rem}
+.meter-legend{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted)}
+
+/* scenario */
+.alert{border:1px solid color-mix(in srgb,var(--amber) 60%,var(--line));background:linear-gradient(135deg,rgba(255,203,82,.08),rgba(14,22,49,.9) 50%);border-radius:18px;padding:20px 22px;margin-bottom:18px}
+.alert-tag{font:700 .72rem ui-monospace,monospace;letter-spacing:.2em;color:var(--amber);animation:blink 1.4s infinite}
+.alert h2{margin:.3em 0}
+.alert .lead{margin:0}
+.q{font-size:1.2rem;margin:18px 0 10px}
+.choices{display:grid;gap:10px}
+.choice{display:flex;gap:14px;align-items:center;text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 16px;font-size:1.05rem}
+.choice:hover{border-color:color-mix(in srgb,var(--acc) 60%,var(--line))}
+.choice .key{flex:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--acc);color:var(--acc);display:grid;place-items:center;font:800 .95rem ui-monospace,monospace}
+.choice[aria-pressed="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,var(--panel))}
+.choice[aria-pressed="true"] .key{background:var(--acc);color:#03101b}
+.fu{margin-top:6px}
+.log{margin-top:16px;padding:10px 14px;border-radius:12px;background:rgba(109,255,160,.07);border:1px solid rgba(109,255,160,.35);animation:rise .3s}
+.log-tag{font:800 .7rem ui-monospace,monospace;letter-spacing:.18em;color:var(--lime)}
+
+/* sort */
+.tray{display:flex;flex-wrap:wrap;gap:8px;min-height:60px;padding:14px;border-radius:14px;border:1px dashed var(--line);background:rgba(10,20,48,.6);margin-bottom:14px}
+.tray-empty{color:var(--lime);font-weight:700}
+.tok{background:#132150;border:1px solid #34497f;border-radius:10px;padding:8px 12px;font-size:.92rem}
+.tok.picked{background:var(--acc);color:#03101b;border-color:var(--acc);box-shadow:0 0 14px var(--acc);font-weight:700}
+.bins{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bin{--bc:var(--acc);border:2px solid color-mix(in srgb,var(--bc) 55%,transparent);border-radius:14px;background:color-mix(in srgb,var(--bc) 6%,var(--panel));min-height:170px;display:flex;flex-direction:column}
+.bin.over{background:color-mix(in srgb,var(--bc) 20%,var(--panel))}
+.bin-head{background:color-mix(in srgb,var(--bc) 16%,transparent);border:0;border-bottom:1px solid color-mix(in srgb,var(--bc) 40%,transparent);border-radius:12px 12px 0 0;padding:10px;font-weight:800;color:var(--bc);display:flex;justify-content:space-between;align-items:center;gap:6px;min-height:52px;text-align:left}
+.bin-head:hover{background:color-mix(in srgb,var(--bc) 28%,transparent)}
+.bin-zone{padding:8px;display:flex;flex-direction:column;gap:6px;flex:1}
+.bin-zone .tok{font-size:.82rem;text-align:left}
+.sort-status{color:var(--amber);min-height:1.4em;font-weight:600}
+
+/* swipe */
+.swipe{display:grid;justify-items:center;gap:14px;margin:6px 0 14px}
+.scard{width:min(520px,100%);text-align:center;background:linear-gradient(160deg,var(--panel2),#0a1230);border:2px solid var(--acc);border-radius:22px;padding:22px;box-shadow:0 0 30px color-mix(in srgb,var(--acc) 30%,transparent);animation:cardin .35s ease-out}
+.scard-n{font:700 .75rem ui-monospace,monospace;color:var(--muted);letter-spacing:.15em}
+.scard-ic{font-size:3.6rem;margin:6px 0}
+.scard h3{font-size:1.5rem;margin:0}
+.scard p{color:#cfd8f5;margin:.4em 0}
+.scard-path{font-size:.8rem;color:var(--muted);margin-top:10px;letter-spacing:.04em}
+.facts{display:grid;gap:6px;margin-top:12px;text-align:left}
+.fact{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:baseline;background:#0a1430;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:.92rem}
+.fl{font:800 .66rem ui-monospace,monospace;letter-spacing:.12em;color:var(--acc)}
+.tier{color:var(--lime);font-family:ui-monospace,monospace;margin-right:4px}
+.swipe-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.sbtn{border-radius:14px;padding:12px 20px;font-weight:800;border:2px solid;background:var(--panel);min-width:130px;min-height:52px}
+.sbtn.yes{border-color:var(--lime);color:var(--lime)}.sbtn.maybe{border-color:var(--amber);color:var(--amber)}.sbtn.no{border-color:#7b88b3;color:#b9c3e3}
+.sbtn[aria-pressed="true"].yes{background:var(--lime);color:#03101b}.sbtn[aria-pressed="true"].maybe{background:var(--amber);color:#03101b}.sbtn[aria-pressed="true"].no{background:#7b88b3;color:#03101b}
+.swipe-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mini{font-size:.78rem;border-radius:8px;padding:5px 9px;border:1px solid var(--line);background:#0a1430}
+.mini.yes{border-color:var(--lime);color:var(--lime)}.mini.maybe{border-color:var(--amber);color:var(--amber)}.mini.no{opacity:.55}
+.mini.cur{outline:2px solid var(--acc)}
+.banner{background:rgba(109,255,160,.1);border:1px solid var(--lime);color:var(--lime);padding:10px 14px;border-radius:12px;font-weight:700;text-align:center}
+
+/* this or that */
+.tot{display:grid;gap:10px}
+.tot-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}
+.tot-btn{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px;font-size:1.05rem;font-weight:700;min-height:56px}
+.tot-btn.mid{font-size:.85rem;font-weight:600;color:var(--muted);padding:8px 14px}
+.tot-btn[aria-pressed="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 18%,var(--panel));color:var(--text)}
+
+/* rate */
+.rate{display:grid;gap:10px}
+.rate-row{display:grid;grid-template-columns:minmax(200px,1fr) auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.rate-row.set{border-color:color-mix(in srgb,var(--acc) 50%,var(--line))}
+.rate-opts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.rate-opts .chip{font-size:.85rem}
+
+/* rank */
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.slot{min-height:76px;border-radius:14px;border:2px dashed #34477f;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,20,48,.6);text-align:left}
+.slot .n{font:900 1.5rem ui-monospace,monospace;color:#3a4c80}
+.slot.full{border:2px solid var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--panel))}
+.slot.full .n{color:var(--acc)}
+.slot .x{margin-left:auto;color:var(--muted);font-size:.8rem}
+
+/* budget */
+.wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;position:sticky;top:60px;z-index:5}
+.wbox{background:#0a1230;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.wbox .lab{font:700 .7rem ui-monospace,monospace;letter-spacing:.16em;color:var(--muted)}
+.wbox .val{font:800 1.5rem ui-monospace,monospace}
+.wbox.ok .val{color:var(--lime)}.wbox.bad{border-color:var(--red)}.wbox.bad .val{color:var(--red)}
+.brow{display:grid;grid-template-columns:minmax(170px,1fr) 2fr 80px;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.brow .typ{display:block;font-size:.75rem;color:var(--muted)}
+.brow input[type=range]{width:100%;accent-color:var(--acc);height:28px}
+.brow .amt{font:800 1.05rem ui-monospace,monospace;text-align:right}
+.budget-msg{margin:10px 0;font-weight:600}
+
+/* blueprint builder */
+.bpb{display:grid;gap:16px}
+.bpb-sec{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.bpb-sec h3{font-size:1.05rem;margin:0 0 4px;color:var(--acc)}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:color-mix(in srgb,var(--acc) 14%,transparent);border:1px solid var(--acc);border-radius:20px;padding:5px 12px;font-weight:700}
+
+/* unlock */
+.vault{display:grid;justify-items:center;gap:18px;padding:20px 0}
+.vault-door{width:230px;height:230px;position:relative}
+.vault-door svg{width:100%;height:100%;filter:drop-shadow(0 0 24px var(--acc))}
+.vault.opening .wheel{animation:spin 1.4s cubic-bezier(.6,0,.3,1) forwards}
+.vault.opening .vault-door{animation:open 1.8s .9s ease-in forwards}
+.wheel{transform-origin:100px 100px}
+
+/* overlay */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(3,6,16,.82);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px;animation:fade .3s}
+.award{max-width:460px;width:100%;text-align:center;background:linear-gradient(180deg,var(--panel2),var(--panel));border:2px solid var(--lime);border-radius:24px;padding:28px;box-shadow:0 0 50px rgba(109,255,160,.35);animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+.award .glyph{width:110px;height:110px;margin:12px auto;border-radius:22px;display:grid;place-items:center;font:900 3.6rem ui-monospace,monospace;color:var(--lime);border:3px solid var(--lime);box-shadow:0 0 30px rgba(109,255,160,.5);animation:glow 1.8s infinite}
+
+/* complete / blueprint screen */
+.bp{position:relative;border-radius:22px;padding:2px;background:linear-gradient(135deg,var(--cyan),var(--mag),var(--lime));margin:18px 0}
+.bp-in{background:#0a1130;border-radius:20px;padding:24px}
+.bp-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:14px}
+.bp-head h2{margin:0}
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.bp-item{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.bp-item .lab{font:700 .7rem ui-monospace,monospace;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
+.bp-item .val{font-weight:600;margin-top:4px;white-space:pre-line}
+.bp-item.wide{grid-column:1/-1}
+.paper{background:#fff;color:#14182b;border-radius:14px;padding:28px;margin-top:16px}
+.note{border:1px solid color-mix(in srgb,var(--amber) 50%,var(--line));background:rgba(255,203,82,.07);border-radius:12px;padding:12px 14px;color:#f3e2b5;font-size:.92rem}
+
+#print{display:none}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{opacity:.25}}
+@keyframes blink{50%{opacity:.45}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes cardin{from{opacity:0;transform:translateX(40px) rotate(3deg)}to{opacity:1;transform:none}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+@keyframes glow{50%{box-shadow:0 0 50px rgba(109,255,160,.85)}}
+@keyframes open{to{transform:scale(1.6);opacity:0}}
+
+@media (max-width:760px){
+ h1{font-size:1.7rem}.prompt{font-size:1.3rem}
+ .bins{grid-template-columns:1fr 1fr}
+ .meter{grid-template-columns:1fr;gap:6px}
+ .rate-row{grid-template-columns:1fr}.rate-opts{justify-content:flex-start}
+ .brow{grid-template-columns:1fr 70px}.brow input{grid-column:1/-1;grid-row:2}
+ .slots{grid-template-columns:1fr}
+ .tot-row{grid-template-columns:1fr 1fr}.tot-btn.mid{grid-column:1/-1;grid-row:2}
+ .wallet{grid-template-columns:1fr 1fr 1fr}.wbox .val{font-size:1.1rem}
+ #hudProg,#hudLabel{display:none}.brand{display:none}.tools .tool{padding:6px 8px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+
+@media print{
+ body{background:#fff;color:#000}
+ body::before,#hud,#app,.overlay,.navbar,#confetti{display:none!important}
+ #print{display:block}
+ @page{margin:14mm}
+}
+</style>
+<style id="pdcss">
+.pd{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#14182b;font-size:12.5px;line-height:1.45}
+.pd h1{font-size:24px;margin:2px 0 0;color:#0b1030}
+.pd-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:3px solid #0b1030;padding-bottom:10px;margin-bottom:12px}
+.pd-kicker{font:800 10.5px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:#1679a8}
+.pd-meta{text-align:right;font-size:12px;color:#444}
+.pd-disc{background:#fff7e0;border:1px solid #e8c766;border-radius:6px;padding:8px 10px;font-size:11.5px;margin:0 0 14px}
+.pd-table{width:100%;border-collapse:collapse;margin:0 0 14px;page-break-inside:auto}
+.pd-table th{background:#0b1030;color:#fff;text-align:left;padding:7px 10px;font-size:12.5px;letter-spacing:.03em}
+.pd-table td{border:1px solid #cfd5e6;padding:6px 10px;vertical-align:top}
+.pd-table td.k{width:34%;font-weight:600;background:#f3f5fb}
+.pd-table td.need{color:#9a5b00;font-style:italic}
+.pd-table tr{page-break-inside:avoid}
+.pd h2{font-size:15px;margin:16px 0 6px;color:#0b1030}
+.pd ul{margin:4px 0 12px;padding-left:20px}.pd li{margin:3px 0}
+.pd-bp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pd-box{border:1.5px solid #0b1030;border-radius:8px;padding:9px 11px;page-break-inside:avoid}
+.pd-box.wide{grid-column:1/-1}
+.pd-box .l{font:800 10px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.16em;color:#1679a8;text-transform:uppercase}
+.pd-box .v{font-size:13.5px;font-weight:600;margin-top:3px;white-space:pre-line}
+.pd-sign{margin-top:18px;font-size:12px;color:#444}
+.pd-break{page-break-before:always;break-before:page}
+</style>
+</head>
+<body>
+<header id="hud">
+ <div class="brand mono">UNLOCK<b>//</b>YOUR FUTURE</div>
+ <span id="hudAgent"></span>
+ <div class="hud-mid"><div id="hudProg"></div><span id="hudLabel"></span></div>
+ <div class="tools">
+  <button class="tool" id="mapBtn" hidden>🗺 Map</button>
+  <button class="tool" id="readBtn" aria-pressed="false" title="Read this screen aloud">🔊 Read to me</button>
+  <button class="tool" id="sizeBtn" title="Change text size">A<sup>+</sup> Text</button>
+ </div>
+</header>
+<main id="app"></main>
+<div id="print"></div>
+<canvas id="confetti" hidden></canvas>
+<script>
+"use strict";
+/* ================= MISSION CONTENT ================= */
+const PATHWAYS=[
+ {id:"univ",icon:"🎓",label:"4-Year College / University",desc:"Earn a bachelor's degree."},
+ {id:"tech",icon:"🛠️",label:"Technical or Community College",desc:"Certificates and 2-year degrees for specific careers."},
+ {id:"appr",icon:"🔩",label:"Apprenticeship / Trade Program",desc:"Get paid while you learn a skilled trade."},
+ {id:"military",icon:"🎖️",label:"Military",desc:"Serve and get training in a military branch."},
+ {id:"work",icon:"💼",label:"Start Working Right Away",desc:"Get a job and learn on the job."},
+ {id:"jobtrain",icon:"📋",label:"Job Training Program",desc:"Programs like Job Corps or Vocational Rehabilitation."},
+ {id:"unsure",icon:"🧭",label:"Still Deciding",desc:"I'm not sure yet — and that's OK."}
+];
+const SUPPORTS=[
+ {id:"time",label:"⏳ Extra time"},{id:"readaloud",label:"🔊 Directions or tests read aloud"},
+ {id:"example",label:"🖼️ Seeing a completed example"},{id:"notes",label:"📝 Copy of notes or a study guide"},
+ {id:"breaks",label:"☕ Breaks"},{id:"quiet",label:"🤫 Quiet place to work"},
+ {id:"checklist",label:"✅ Checklists / step-by-step directions"},{id:"calc",label:"🧮 Calculator"},
+ {id:"shorter",label:"✂️ Shorter assignments"},{id:"checkin",label:"👋 Teacher check-ins"},
+ {id:"organizer",label:"🗺️ Graphic organizers"},{id:"seat",label:"🪑 Sitting near the teacher"},
+ {id:"tts",label:"🎧 Text-to-speech / audiobooks"},{id:"stt",label:"🎙️ Speech-to-text (talk to type)"},
+ {id:"reminders",label:"🔔 Reminders about due dates"}
+];
+const INDEP={q:"Could you handle a situation like this on your own right now?",options:["Yes, on my own","With some help","Not yet — I'd need to learn how"]};
+
+const MISSIONS=[
+{id:"m1",code:"01",name:"The Identity Vault",tag:"Discover your strengths",color:"#3be3ff",icon:"🧬",mins:"6–8",steps:[
+ {type:"intro",icon:"🧬",title:"The Identity Vault",text:["The vault door is sealed with a scanner. It doesn't read fingerprints — it reads who you are.","To open it, you'll calibrate the scanner with your real strengths, interests, and power levels. There are no wrong answers. The scanner only works if you're honest."],brief:["Pick 3 strengths and back them up with real examples","Choose what you're into","Set your power levels","Choose what you want to level up"]},
+ {type:"pick",id:"strengths",title:"Strength Scan",prompt:"Which of these sound most like you?",sub:"Read each situation. Choose the 3 that describe you best.",min:3,max:3,options:[
+  {id:"team",icon:"🤝",label:"Team Player",desc:"In a group project, I help everyone work together and get it done."},
+  {id:"hands",icon:"🔧",label:"Hands-On Learner",desc:"I learn best when I can build, fix, or try something myself."},
+  {id:"persist",icon:"🧗",label:"Persistent",desc:"When something gets hard, I keep trying instead of giving up."},
+  {id:"creative",icon:"💡",label:"Creative",desc:"I come up with ideas, designs, or solutions other people don't think of."},
+  {id:"tech",icon:"💻",label:"Tech Savvy",desc:"I figure out new apps, games, and devices quickly."},
+  {id:"helper",icon:"💬",label:"Helper",desc:"People come to me when they need help or someone to listen."},
+  {id:"organized",icon:"🗂️",label:"Organized",desc:"I keep my stuff, schedule, or plans in order."},
+  {id:"solver",icon:"🧩",label:"Problem Solver",desc:"I like figuring out puzzles and how things work."},
+  {id:"talker",icon:"🎤",label:"Communicator",desc:"I can explain things and talk with people easily."},
+  {id:"artist",icon:"🎨",label:"Artistic / Musical",desc:"I'm good at art, music, drama, or making things look or sound good."},
+  {id:"athlete",icon:"🏀",label:"Athletic",desc:"I'm good at sports, moving, or physical challenges."},
+  {id:"numbers",icon:"🔢",label:"Good With Numbers",desc:"Math, money, or keeping score makes sense to me."},
+  {id:"reader",icon:"📚",label:"Reader / Storyteller",desc:"I like reading, writing, or telling stories."},
+  {id:"reliable",icon:"⏰",label:"Reliable",desc:"I show up and do what I said I would do."},
+  {id:"caring",icon:"🐾",label:"Caring",desc:"I'm patient with kids, animals, or people who need extra care."}]},
+ {type:"examples",id:"strength_examples",from:"strengths",title:"Proof Required",prompt:"The scanner needs evidence.",sub:"For each strength, describe a real time you showed it — at school, home, work, sports, anywhere. A sentence is enough. Tap a starter if you're stuck.",min:12,starters:["One time I…","At school, I…","At home, I…","My friends would say…","When I play / work, I…"]},
+ {type:"pick",id:"interests",title:"Interest Signals",prompt:"What are you into?",sub:"Choose everything that grabs your attention (at least 2).",min:2,max:17,layout:"tiles",other:"Something else I'm into (optional)",options:[
+  {id:"cars",icon:"🚗",label:"Cars & engines"},{id:"games",icon:"🎮",label:"Video games"},{id:"art",icon:"🎨",label:"Art & design"},
+  {id:"music",icon:"🎵",label:"Music"},{id:"sports",icon:"⚽",label:"Sports & fitness"},{id:"animals",icon:"🐶",label:"Animals"},
+  {id:"cooking",icon:"🍳",label:"Cooking & food"},{id:"building",icon:"🔨",label:"Building & fixing"},{id:"computers",icon:"💻",label:"Computers & tech"},
+  {id:"helping",icon:"🤲",label:"Helping people"},{id:"outdoors",icon:"🌲",label:"Nature & outdoors"},{id:"fashion",icon:"👟",label:"Fashion & style"},
+  {id:"health",icon:"🩺",label:"Health & medicine"},{id:"media",icon:"🎬",label:"Videos & social media"},{id:"science",icon:"🔬",label:"Science"},
+  {id:"business",icon:"💵",label:"Money & business"},{id:"kids",icon:"🧸",label:"Working with kids"}]},
+ {type:"meter",id:"power",title:"Power Levels",prompt:"How strong do you feel in each of these right now?",sub:"Tap a level for each one. This is how YOU see yourself — not a grade.",labels:["Low","Building","OK","Strong","Maxed"],items:[
+  {id:"reading",icon:"📖",label:"Reading"},{id:"writing",icon:"✍️",label:"Writing"},{id:"math",icon:"➗",label:"Math"},
+  {id:"science",icon:"🔬",label:"Science"},{id:"social",icon:"🌎",label:"Social studies"},{id:"handson",icon:"🔧",label:"Hands-on / elective classes"},
+  {id:"focus",icon:"🎯",label:"Staying focused"},{id:"organize",icon:"🗂️",label:"Staying organized"},{id:"adults",icon:"🗣️",label:"Talking with teachers & adults"},
+  {id:"groups",icon:"👥",label:"Working in groups"},{id:"tests",icon:"📝",label:"Taking tests"}]},
+ {type:"pick",id:"growth",title:"Upgrade Path",prompt:"Which areas do you most want to level up this year?",sub:"Choose 1 or 2. Everyone has something they're working on.",min:1,max:2,layout:"tiles",options:[
+  {id:"reading",icon:"📖",label:"Reading"},{id:"writing",icon:"✍️",label:"Writing"},{id:"math",icon:"➗",label:"Math"},
+  {id:"focus",icon:"🎯",label:"Staying focused"},{id:"organize",icon:"🗂️",label:"Getting organized"},{id:"ontime",icon:"📅",label:"Finishing work on time"},
+  {id:"help",icon:"🙋",label:"Asking for help"},{id:"tests",icon:"📝",label:"Taking tests"},{id:"stress",icon:"🌊",label:"Handling stress or frustration"},
+  {id:"friends",icon:"🤝",label:"Getting along with others"},{id:"speak",icon:"📣",label:"Speaking up for myself"},{id:"attend",icon:"🚪",label:"Getting to school / class"}]}
+]},
+
+{id:"m2",code:"02",name:"The Learning Lab",tag:"Crack your learning code",color:"#ff5ad9",icon:"🧪",mins:"7–9",steps:[
+ {type:"intro",icon:"🧪",title:"The Learning Lab",text:["Alarms are going off in the Lab. Four classroom emergencies are coming in, and you're the one who has to respond.","Every brain has its own code. Your choices here help crack yours — what gets in your way, and what actually helps."],brief:["Respond to 4 classroom challenges","Sort supports by how much they help you","Rank how you learn best","Run a quick self-advocacy scan"]},
+ {type:"scenario",id:"sc_crisis",title:"The Assignment Crisis",text:"Your teacher assigns a project worth 25% of your grade. You've read the directions twice but still don't understand what you're supposed to do. The teacher is helping another student, and class ends in 15 minutes.",options:[
+  {id:"ask",label:"Ask the teacher when they're available",log:"Knowing when to ask is a real skill.",fu:{q:"What would make asking the teacher easier?",options:["The teacher checks in with me first","A private signal or help card","Asking in writing or a message","Nothing — I'm comfortable asking"]}},
+  {id:"peer",label:"Ask a classmate to explain the assignment",log:"Classmates can be a great resource.",fu:{q:"Why a classmate instead of the teacher?",options:["Classmates explain it in a way I get","I don't want to interrupt the teacher","I feel awkward asking the teacher","It's just faster"]}},
+  {id:"try",label:"Try completing what you understand first",log:"Starting with what you know keeps you moving.",fu:{q:"What would help you get started on an assignment like this?",options:["Seeing a finished example","Directions broken into steps or a checklist","Hearing the directions read aloud","A quick one-on-one check-in"]}},
+  {id:"wait",label:"Wait and hope it makes sense later",log:"Lots of students do this. Let's see what happens next.",fu:{q:"When you wait like this, what usually happens next?",options:["I figure it out later","I fall behind","I don't turn it in","Someone at home helps me"]}}]},
+ {type:"scenario",id:"sc_test",title:"Mind Blank",text:"It's test day. You studied, but when you read the first question, your mind goes completely blank. Everyone around you is writing.",fu:{q:"What makes tests hardest for you? (choose all that fit)",multi:true,options:["Running out of time","Getting nervous","Reading long questions","Too much on one page","Remembering what I studied","Noise and distractions","Writing long answers","Tests aren't really hard for me"]},options:[
+  {id:"skip",label:"Skip it and come back to it later",log:"Moving on and circling back is a common strategy."},
+  {id:"guess",label:"Guess and keep moving",log:"Keeping momentum matters to you."},
+  {id:"askbreak",label:"Ask the teacher for a break or extra time",log:"Asking for what you need takes courage."},
+  {id:"freeze",label:"Freeze up and stop trying",log:"That happens to a lot of people. Thanks for being honest."}]},
+ {type:"scenario",id:"sc_distract",title:"Noise Storm",text:"You're reading a chapter for class. Two students nearby are talking, someone's phone keeps buzzing, and the hallway is loud.",fu:{q:"Where do you focus best?",options:["In a quiet room","Near the teacher","With music or headphones","Away from doors and windows","In a small group","It doesn't really matter"]},options:[
+  {id:"move",label:"Ask to move to a quieter spot",log:"You know your environment matters."},
+  {id:"phones",label:"Use headphones or earplugs (if allowed)",log:"Blocking noise is a smart tool."},
+  {id:"tune",label:"Try to tune it out and keep reading",log:"Logged. Some people can block it out — some can't."},
+  {id:"join",label:"Stop working and join the conversation",log:"Logged. Distractions are real for everyone."}]},
+ {type:"scenario",id:"sc_absent",title:"Missing Data",text:"You were absent for two days. Now you're back, the class has moved on to something new, and you missed the notes. You're lost.",fu:{q:"How do you feel about asking adults at school for help?",options:["Easy — I do it all the time","OK if it's one-on-one","Nervous, but I can do it","I'd rather figure it out alone"]},options:[
+  {id:"message",label:"Email or message the teacher",log:"Writing can be an easier way to ask."},
+  {id:"after",label:"Talk to the teacher after class",log:"A private conversation works for a lot of people."},
+  {id:"friend",label:"Get the notes from a friend",log:"Using your network — logged."},
+  {id:"quiet",label:"Say nothing and try to keep up",log:"Logged. Lots of students try to handle it alone."}]},
+ {type:"sort",id:"supports",title:"Support Calibration",prompt:"Which supports actually help you?",sub:"Tap a support card, then tap the bin where it belongs. (You can also drag.) Tap a card in a bin to move it.",cards:SUPPORTS,bins:[
+  {id:"alot",icon:"✅",label:"Helps a lot",color:"#6dffa0"},{id:"some",icon:"➖",label:"Helps sometimes",color:"#ffcb52"},
+  {id:"no",icon:"❌",label:"Doesn't help me",color:"#ff7486"},{id:"never",icon:"❔",label:"Haven't tried it",color:"#a796ff"}]},
+ {type:"rank",id:"learnways",title:"Learning Code",prompt:"How do you learn something new best?",sub:"Tap your top 3 in order — #1 is the way that works best for you.",pick:3,options:[
+  {id:"show",icon:"👀",label:"Watching someone show me"},{id:"hands",icon:"✋",label:"Doing it hands-on"},{id:"read",icon:"📖",label:"Reading about it"},
+  {id:"listen",icon:"👂",label:"Listening to someone explain"},{id:"talk",icon:"💬",label:"Talking it through with others"},{id:"visual",icon:"🖼️",label:"Pictures, videos, or diagrams"},
+  {id:"practice",icon:"🔁",label:"Practicing it over and over"}]},
+ {type:"rate",id:"selfadv",title:"Self-Advocacy Scan",prompt:"Quick scan: you and your IEP",sub:"Choose the answer that fits you best for each one.",items:[
+  {id:"knowIEP",label:"Do you know what an IEP is and why you have one?",options:["Yes, I could explain it","A little","Not really"]},
+  {id:"knowAcc",label:"Do you know which accommodations are in your IEP?",options:["Yes, most of them","Some of them","Not really"]},
+  {id:"askedAcc",label:"Have you ever asked a teacher to use one of your accommodations?",options:["Yes, often","Once or twice","Never"]},
+  {id:"attended",label:"Have you been to your IEP meeting before?",options:["Yes, and I spoke","Yes, but I mostly listened","No","Not sure"]},
+  {id:"speakUp",label:"How do you feel about speaking up for what you need?",options:["Confident","OK with some people","Nervous","I'd rather not"]}]}
+]},
+
+{id:"m3",code:"03",name:"The Career Portal",tag:"Choose your next destination",color:"#ffcb52",icon:"🌀",mins:"6–8",steps:[
+ {type:"intro",icon:"🌀",title:"The Career Portal",text:["The Portal is powered up and can send you to any future destination — but it needs coordinates.","Explore the pathways after high school, test-drive some careers, and figure out what kind of work world fits you."],brief:["Choose your destination after high school","Test-drive career cards","Pick your ideal work environment","Check what you know about getting there"]},
+ {type:"pick",id:"pathway",title:"Set Destination",prompt:"Where do you want to go after high school?",sub:"Choose your main destination.",min:1,max:1,options:PATHWAYS},
+ {type:"pick",id:"backup",title:"Backup Route",prompt:"Every good navigator has a backup route.",sub:"Optional: choose a second pathway you'd consider. You can skip this.",min:0,max:1,options:PATHWAYS},
+ {type:"swipe",id:"careers",title:"Career Test Drive",prompt:"Would you want to try this career?",sub:"Look at the work, the training, and the pay. Then go with your gut.",choices:[{id:"yes",icon:"👍",label:"Interested",cls:"yes"},{id:"maybe",icon:"🤔",label:"Maybe",cls:"maybe"},{id:"no",icon:"👎",label:"Not for me",cls:"no"}],cards:[
+  {id:"retail",icon:"🛒",label:"Retail / Grocery Associate",desc:"Stock shelves, help customers find things, and run the register.",train:"Learn on the job",tl:"job",pay:33,cluster:"Customer service",skills:"Being friendly, reliable, and organized"},
+  {id:"cook",icon:"🍳",label:"Line Cook",desc:"Prepare meals fast in a busy restaurant kitchen.",train:"Learn on the job or a culinary program",tl:"job",pay:35,cluster:"Food & hospitality",skills:"Working fast, teamwork, following recipes"},
+  {id:"lawn",icon:"🌳",label:"Landscaper / Groundskeeper",desc:"Mow, plant, and take care of parks, yards, and campuses.",train:"Learn on the job",tl:"job",pay:38,cluster:"Outdoors",skills:"Physical work, using equipment, working outside"},
+  {id:"child",icon:"🧸",label:"Childcare Worker / Teacher Aide",desc:"Care for young kids and help teachers in the classroom.",train:"Short certificate or on the job",tl:"cert",pay:32,cluster:"Education & helping",skills:"Patience, caring, keeping kids safe"},
+  {id:"barber",icon:"💈",label:"Barber / Cosmetologist",desc:"Cut and style hair and build a base of regular clients.",train:"Cosmetology school (about 1 year) + state license",tl:"cert",pay:36,cluster:"Personal care & creative",skills:"Creativity, steady hands, talking with people"},
+  {id:"cna",icon:"🩺",label:"Certified Nursing Assistant",desc:"Help patients bathe, eat, and move in hospitals and nursing homes.",train:"4–12 week certificate",tl:"cert",pay:39,cluster:"Healthcare",skills:"Caring, physical stamina, following procedures"},
+  {id:"office",icon:"🗂️",label:"Office Assistant",desc:"Answer phones, schedule appointments, and keep files organized.",train:"On the job or short certificate",tl:"cert",pay:46,cluster:"Business & office",skills:"Organization, computer skills, communication"},
+  {id:"vet",icon:"🐶",label:"Veterinary Technician",desc:"Help vets examine, treat, and care for animals.",train:"2-year degree + certification",tl:"2yr",pay:45,cluster:"Animals & science",skills:"Caring for animals, science, staying calm"},
+  {id:"truck",icon:"🚚",label:"Truck Driver (CDL)",desc:"Drive long or local routes delivering products.",train:"CDL training (about 1–2 months)",tl:"cert",pay:57,cluster:"Transportation",skills:"Safe driving, independence, time management"},
+  {id:"auto",icon:"🚗",label:"Automotive Technician",desc:"Diagnose and repair cars and trucks.",train:"Technical college or on the job",tl:"2yr",pay:50,cluster:"Skilled trades",skills:"Problem-solving, hands-on, using tools and tech"},
+  {id:"weld",icon:"🔥",label:"Welder",desc:"Join and cut metal to build and repair things.",train:"Technical college certificate (under 1 year)",tl:"cert",pay:51,cluster:"Skilled trades",skills:"Precision, hands-on, safety"},
+  {id:"elec",icon:"⚡",label:"Electrician",desc:"Install and fix wiring in homes and buildings.",train:"Paid apprenticeship (about 4 years)",tl:"appr",pay:62,cluster:"Skilled trades",skills:"Math, problem-solving, following safety codes"},
+  {id:"it",icon:"🖥️",label:"IT / Computer Support",desc:"Help people fix computers and keep networks running.",train:"Certification or 2-year degree",tl:"2yr",pay:60,cluster:"Technology",skills:"Troubleshooting, patience, explaining tech"},
+  {id:"safety",icon:"🚒",label:"Firefighter / Police Officer",desc:"Respond to emergencies and protect your community.",train:"Training academy (several months)",tl:"academy",pay:65,cluster:"Public safety",skills:"Courage, teamwork, staying calm under pressure"},
+  {id:"design",icon:"🎨",label:"Graphic Designer",desc:"Design logos, ads, and websites for businesses.",train:"2- or 4-year degree + a portfolio",tl:"4yr",pay:61,cluster:"Arts & media",skills:"Creativity, computer design tools, taking feedback"},
+  {id:"rn",icon:"🏥",label:"Registered Nurse",desc:"Care for patients, give medicine, and work with doctors.",train:"2- or 4-year nursing degree + license",tl:"4yr",pay:93,cluster:"Healthcare",skills:"Science, caring, quick decisions"},
+  {id:"dev",icon:"💻",label:"Software Developer",desc:"Write code to build apps, games, and websites.",train:"4-year degree (some use coding bootcamps)",tl:"4yr",pay:130,cluster:"Technology",skills:"Logic, math, solving puzzles, focus"}]},
+ {type:"thisorthat",id:"workenv",title:"Work Zone",prompt:"What kind of workplace fits you?",sub:"For each pair, pick the side you'd rather have — or \"Either\" if you don't mind.",pairs:[
+  {id:"place",a:"🏢 Indoors",b:"🌤️ Outdoors"},{id:"people",a:"👥 With a team",b:"🧍 On my own"},
+  {id:"task",a:"✋ Hands-on work",b:"💻 Computer work"},{id:"routine",a:"🔁 Same routine each day",b:"🎲 Something new each day"},
+  {id:"noise",a:"🤫 Quiet and calm",b:"📣 Busy and active"},{id:"body",a:"🪑 Mostly sitting",b:"🚶 On my feet, moving"}]},
+ {type:"text",id:"dreamjob",title:"Dream Coordinates",prompt:"If you could have any job in 5 years, what would it be?",sub:"Dream big. Then tell why it fits you.",min:4,starters:["I would be a…","because I like…","I'm good at…"],ph:"My dream job is…"},
+ {type:"rate",id:"nextknow",title:"Navigation Check",prompt:"How much do you know about getting there?",sub:"Be honest — this shows what you might want to learn next.",levels:["I know this","Kind of","Not yet"],items:[
+  {id:"train",label:"What training or education my career choice needs"},{id:"applySchool",label:"How to apply to a college or training program"},
+  {id:"applyJob",label:"How to find and apply for a job"},{id:"resume",label:"How to make a resume"},{id:"interview",label:"How to do a job interview"},
+  {id:"who",label:"Who can help me plan (counselor, Voc Rehab, teacher)"},{id:"pay",label:"How much my career usually pays"}]},
+ {type:"pick",id:"workexp",title:"Flight Log",prompt:"What work experience do you already have?",sub:"Choose all that apply.",min:1,max:7,layout:"tiles",options:[
+  {id:"paid",icon:"💵",label:"A paid job"},{id:"volunteer",icon:"🙌",label:"Volunteering"},{id:"shadow",icon:"👣",label:"Job shadowing"},
+  {id:"cte",icon:"🧰",label:"Career / CTE class"},{id:"family",icon:"🏠",label:"Family business or regular chores"},
+  {id:"gigs",icon:"🐕",label:"Babysitting, pet sitting, or yard work"},{id:"none",icon:"➖",label:"None yet"}]}
+]},
+
+{id:"m4",code:"04",name:"The Reality Simulator",tag:"Survive real-world challenges",color:"#6dffa0",icon:"🌆",mins:"8–10",steps:[
+ {type:"intro",icon:"🌆",title:"The Reality Simulator",text:["SIMULATION LOADING… It's three years after graduation. You have a job, a paycheck, and a life to run.","This isn't a test. The simulator is figuring out what you can already handle and what you'd like to learn before you get there."],brief:["Plan your monthly budget","Handle 5 real-life surprises","Scan your life skills","Choose where you'll live"]},
+ {type:"budget",id:"budget",title:"Payday",prompt:"Plan your month.",sub:"You take home $2,000 a month after taxes. Move the sliders to decide where your money goes.",income:2000,cats:[
+  {id:"housing",icon:"🏠",label:"Rent & utilities",typ:"Typical: $700–$1,200"},{id:"food",icon:"🛒",label:"Groceries & food",typ:"Typical: $250–$450"},
+  {id:"phone",icon:"📱",label:"Phone & internet",typ:"Typical: $50–$120"},{id:"transport",icon:"🚌",label:"Transportation",typ:"Typical: $80–$450"},
+  {id:"savings",icon:"🐷",label:"Savings",typ:"Goal: $100 or more"},{id:"fun",icon:"🎉",label:"Fun & entertainment",typ:"Typical: $50–$200"},
+  {id:"personal",icon:"👕",label:"Clothes & personal care",typ:"Typical: $50–$150"}]},
+ {type:"pick",id:"money",title:"Money Check",prompt:"How do you handle money right now?",sub:"Choose all that apply.",min:1,max:5,layout:"tiles",options:[
+  {id:"bank",icon:"🏦",label:"I have a bank account or debit card"},{id:"cash",icon:"💵",label:"I mostly use cash"},
+  {id:"app",icon:"📲",label:"I use a payment app"},{id:"family",icon:"👪",label:"A family member handles money for me"},{id:"none",icon:"➖",label:"I don't really handle money yet"}]},
+ {type:"scenario",id:"rs_ride",title:"Ride Cancelled",text:"Your ride to work just cancelled. Your shift starts in one hour, and work is 4 miles away.",fu:INDEP,options:[
+  {id:"bus",label:"Look up the bus or train route",log:"Public transit can be a great backup."},
+  {id:"rideshare",label:"Order a rideshare or taxi",log:"Fast — and it costs money. Logged."},
+  {id:"call",label:"Call your manager to explain you may be late",log:"Communicating early builds trust at work."},
+  {id:"skip",label:"Skip the shift and deal with it later",log:"Missing a shift without telling anyone can put a job at risk — good to know before it happens."}]},
+ {type:"scenario",id:"rs_late",title:"Overtime Request",text:"Your manager asks you to stay two extra hours tonight. You already promised to help your family this evening.",fu:INDEP,options:[
+  {id:"yes",label:"Say yes and cancel your plans",log:"Extra hours = extra pay. Logged."},
+  {id:"explain",label:"Politely explain you can't tonight",log:"Setting a boundary respectfully is a work skill."},
+  {id:"compromise",label:"Offer to stay one hour or work another day",log:"Finding a middle ground — logged."},
+  {id:"leave",label:"Leave without saying anything",log:"Logged. Talking it through usually goes better with a boss."}]},
+ {type:"scenario",id:"rs_bill",title:"Surprise Bill",text:"A $150 bill you didn't expect shows up. It's due in one week.",fu:INDEP,options:[
+  {id:"savings",label:"Pay it from your savings",log:"This is exactly what savings are for."},
+  {id:"plan",label:"Call and ask for a payment plan",log:"Lots of companies offer these — smart ask."},
+  {id:"family",label:"Ask family for help",log:"Knowing who to ask is part of the plan."},
+  {id:"ignore",label:"Ignore it and hope it goes away",log:"Logged. Unpaid bills can grow with late fees — good to know."}]},
+ {type:"scenario",id:"rs_sick",title:"Sick Day",text:"You wake up with a fever and a bad cough. You're scheduled to work at 9:00.",fu:INDEP,options:[
+  {id:"calldoc",label:"Call work, then call to make a doctor's appointment",log:"Taking care of work and health — logged."},
+  {id:"urgent",label:"Go to urgent care",log:"Urgent care is a solid option. Remember to tell work, too."},
+  {id:"family",label:"Ask a family member to handle it",log:"Logged. Getting support is OK."},
+  {id:"push",label:"Go to work anyway and wait it out",log:"Logged. Most jobs want sick workers to call in."}]},
+ {type:"scenario",id:"rs_leak",title:"Apartment Emergency",text:"Water is leaking from under your kitchen sink onto the floor.",fu:INDEP,options:[
+  {id:"landlord",label:"Turn off the water and call the landlord",log:"That's the move most landlords want."},
+  {id:"video",label:"Look up a video and try to fix it",log:"DIY problem-solver — logged."},
+  {id:"family",label:"Call a family member for help",log:"Logged. Having someone to call matters."},
+  {id:"ignore",label:"Put a towel down and ignore it",log:"Logged. Small leaks can turn into big damage."}]},
+ {type:"rate",id:"lifeskills",title:"Life Skills Scan",prompt:"Where are you with these life skills?",sub:"No judging — this helps decide what's worth practicing.",levels:["I've got this","Need some help","Need to learn"],items:[
+  {id:"cook",label:"🍝 Cooking simple meals"},{id:"laundry",label:"🧺 Doing laundry"},{id:"schedule",label:"📅 Keeping a calendar or schedule"},
+  {id:"calls",label:"📞 Making phone calls and appointments"},{id:"bank",label:"🏦 Using a bank account or debit card"},{id:"forms",label:"📄 Filling out forms and applications"},
+  {id:"health",label:"💊 Managing my health and medicine"},{id:"travel",label:"🚌 Getting around town"},{id:"shop",label:"🛒 Shopping on a budget"},
+  {id:"clean",label:"🧽 Keeping my space clean"},{id:"online",label:"🔐 Staying safe online"},{id:"ontime",label:"⏰ Waking up and getting places on time"}]},
+ {type:"pick",id:"living",title:"Home Base",prompt:"After high school, where do you plan to live?",sub:"Choose one.",min:1,max:1,layout:"tiles",options:[
+  {id:"family",icon:"🏡",label:"With my family"},{id:"own",icon:"🔑",label:"In my own apartment"},{id:"roommates",icon:"🛋️",label:"With roommates"},
+  {id:"dorm",icon:"🎓",label:"In a college dorm"},{id:"military",icon:"🎖️",label:"Military housing"},{id:"supported",icon:"🤝",label:"Supported or group living"},{id:"unsure",icon:"🧭",label:"Not sure yet"}]}
+]},
+
+{id:"m5",code:"05",name:"The Final Unlock",tag:"Build your personal blueprint",color:"#a796ff",icon:"🔐",mins:"6–8",steps:[
+ {type:"intro",icon:"🔐",title:"The Final Unlock",text:["You made it to the last lock. This one is different — it opens with a blueprint only you can build.","Pull together everything you discovered: your strengths, your direction, what helps you, and your goals. This becomes your Future Blueprint for your IEP meeting."],brief:["Build your blueprint","Set priorities for your IEP team","Plan how you'll take part in your meeting","Describe your vision — then unlock"]},
+ {type:"blueprint",id:"bp",title:"Blueprint Builder",prompt:"Build your Future Blueprint.",sub:"We pulled in what you discovered. Choose one answer for each part."},
+ {type:"rank",id:"priorities",title:"Team Priorities",prompt:"What should your IEP team focus on this year?",sub:"Tap your top 3 in order — #1 matters most.",pick:3,options:[
+  {id:"reading",icon:"📖",label:"Reading"},{id:"writing",icon:"✍️",label:"Writing"},{id:"math",icon:"➗",label:"Math"},
+  {id:"focus",icon:"🎯",label:"Focus & organization"},{id:"advocacy",icon:"📣",label:"Speaking up for what I need"},{id:"job",icon:"💼",label:"Job & career skills"},
+  {id:"living",icon:"🏠",label:"Independent living skills"},{id:"social",icon:"🤝",label:"Social skills & relationships"},{id:"emotions",icon:"🌊",label:"Managing stress & emotions"},
+  {id:"college",icon:"🎓",label:"Getting ready for college or training"},{id:"communication",icon:"💬",label:"Communication"}]},
+ {type:"pick",id:"meeting",title:"Meeting Mode",prompt:"In my IEP meeting, I want to…",sub:"Choose all that you'd like to do.",min:1,max:7,layout:"tiles",options:[
+  {id:"strengths",icon:"💪",label:"Share my strengths"},{id:"goals",icon:"🎯",label:"Talk about my career goals"},{id:"supports",icon:"🧰",label:"Explain what helps me learn"},
+  {id:"questions",icon:"❓",label:"Ask questions"},{id:"lead",icon:"🎤",label:"Lead part of the meeting"},{id:"blueprint",icon:"📄",label:"Share this blueprint"},{id:"listen",icon:"👂",label:"Mostly listen this time"}]},
+ {type:"text",id:"vision",title:"Vision Lock",prompt:"In 5 years, I see myself…",sub:"Where are you working or learning? Where are you living? What do you do for fun?",min:15,starters:["After graduation, I will…","I see myself working as…","I want to live…","In my free time, I…"],ph:"In 5 years, I see myself…"},
+ {type:"text",id:"teamknow",title:"Message to Your Team",prompt:"One thing I want my IEP team to know about me:",sub:"Optional — but this is your chance to say it.",min:0,optional:true,starters:["I work best when…","Something people don't know about me is…","It's hard for me when…"],ph:"I want my team to know…"},
+ {type:"unlock",title:"Final Lock",prompt:"All five key letters collected."}
+]}
+];
+
+const NEXT_STEPS=["Research training programs for my career","Talk with my school counselor about my plan","Job shadow or volunteer in a field I like","Take a career (CTE) class","Visit a college or technical school","Get a part-time or summer job","Learn more about my accommodations","Practice a life skill at home","Contact Vocational Rehabilitation"];
+const GOAL_STARTERS=["Get more comfortable asking for help","Turn in my work on time","Improve my reading","Learn to manage my money","Get a part-time job","Stay organized with a planner"];
+const TL={job:"Learn on the job",cert:"Short certificate / license",appr:"Apprenticeship",academy:"Training academy","2yr":"2-year / technical",["4yr"]:"4-year degree"};
+const payTier=k=>k<40?"$":k<60?"$$":k<90?"$$$":"$$$$";
+const KEYS="READY".split("");
+
+/* ================= ENGINE ================= */
+const STEPS={};MISSIONS.forEach(M=>M.steps.forEach(s=>{if(s.id)STEPS[s.id]=s;}));
+const S={view:"title",name:"",grade:"",m:0,s:0,done:[false,false,false,false,false],r:{},t:[0,0,0,0,0],enter:0,started:null,finished:null,back:"hub",saved:false};
+let cur={};
+const $=(s,r=document)=>r.querySelector(s);
+function h(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const k in attrs){const v=attrs[k];if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k==="html")e.innerHTML=v;else if(k.startsWith("on")&&typeof v==="function")e.addEventListener(k.slice(2),v);else e.setAttribute(k,v===true?"":v);}for(const c of kids.flat(3)){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)));}return e;}
+const unlocked=i=>i===0||S.done[i-1];
+const doneCount=()=>S.done.filter(Boolean).length;
+const first=()=>(S.name||"Agent").split(/\s+/)[0];
+
+const LOCK_SVG=`<svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3be3ff"/><stop offset="1" stop-color="#ff5ad9"/></linearGradient></defs>
+<circle cx="100" cy="100" r="92" fill="#0b1430" stroke="url(#lg)" stroke-width="4"/>
+<g class="spin"><circle cx="100" cy="100" r="78" fill="none" stroke="#3be3ff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 10"/></g>
+<circle cx="100" cy="100" r="60" fill="#0e1a3d" stroke="#3be3ff" stroke-width="3"/>
+<g class="wheel" stroke="#3be3ff" stroke-width="7" stroke-linecap="round"><line x1="100" y1="52" x2="100" y2="148"/><line x1="52" y1="100" x2="148" y2="100"/><line x1="66" y1="66" x2="134" y2="134"/><line x1="134" y1="66" x2="66" y2="134"/><circle cx="100" cy="100" r="16" fill="#0b1430" stroke-width="5"/></g>
+<rect x="90" y="92" width="20" height="16" rx="3" fill="#ffcb52"/><path d="M93 92v-5a7 7 0 0 1 14 0v5" fill="none" stroke="#ffcb52" stroke-width="3"/></svg>`;
+
+/* ---------- render ---------- */
+function render(){
+ stopSpeak();
+ const app=$("#app");app.innerHTML="";cur={};
+ document.documentElement.style.setProperty("--acc",S.view==="mission"?MISSIONS[S.m].color:"#3be3ff");
+ const v={title:vTitle,hub:vHub,mission:vMission,complete:vComplete,teacher:vTeacher}[S.view]();
+ app.append(v);updateHud();refresh();
+ window.scrollTo(0,0);
+ const hd=app.querySelector("h1,h2");if(hd){hd.setAttribute("tabindex","-1");hd.focus({preventScroll:true});}
+}
+function updateHud(){
+ const p=$("#hudProg");p.innerHTML="";
+ MISSIONS.forEach((M,i)=>p.append(h("div",{class:"hud-seg"+(S.done[i]?" done":"")+(S.view==="mission"&&S.m===i&&!S.done[i]?" cur":""),title:M.name})));
+ $("#hudLabel").textContent=S.name?`${doneCount()}/5 missions`:"";
+ $("#hudAgent").textContent=S.name?"Agent "+first():"";
+ $("#mapBtn").hidden=!S.name||S.view==="title"||S.view==="hub";
+}
+function refresh(){const b=$("#nextBtn");if(!b)return;const ok=!cur.valid||cur.valid();b.disabled=!ok;const hn=$("#hint");if(hn)hn.textContent=ok?"":(cur.hint||"");}
+
+/* ---------- title ---------- */
+function vTitle(){
+ const name=h("input",{class:"tb",placeholder:"First name",autocomplete:"off",maxlength:"30",id:"nameIn"});name.value=S.first||"";
+ const init=h("input",{class:"tb",placeholder:"Initial",autocomplete:"off",maxlength:"1",id:"initIn",style:"text-transform:uppercase","aria-label":"Last initial"});init.value=S.init||"";
+ name.addEventListener("input",()=>{if(/\s/.test(name.value)){name.value=name.value.replace(/\s+/g,"");err.textContent="First name only — put just the first letter of your last name in the next box.";}});
+ init.addEventListener("input",()=>{init.value=init.value.replace(/[^A-Za-z]/g,"").toUpperCase();});
+ const grade=h("select",{class:"tb",id:"gradeIn"},["","9","10","11","12","Other"].map(g=>h("option",{value:g},g===""?"Choose grade (optional)":g==="Other"?"Other":"Grade "+g)));grade.value=S.grade;
+ const err=h("div",{class:"err",role:"alert"});
+ function start(){const n=name.value.trim(),i=init.value.trim().toUpperCase();if(n.length<1){err.textContent="Enter your first name so your blueprint belongs to you.";name.focus();return;}if(!/^[A-Z]$/.test(i)){err.textContent="Enter the first letter of your last name.";init.focus();return;}S.first=n.charAt(0).toUpperCase()+n.slice(1);S.init=i;S.name=S.first+" "+i+".";S.grade=grade.value;if(!S.started)S.started=Date.now();S.view="hub";render();}
+ [name,init].forEach(x=>x.addEventListener("keydown",e=>{if(e.key==="Enter")start();}));
+ return h("section",{class:"title"},
+  h("div",{class:"lock-art",html:LOCK_SVG}),
+  h("div",{class:"eyebrow mono"},"ACCESS TERMINAL · 5 SEALED MISSIONS"),
+  h("h1",{class:"glitch"},"Unlock Your Future"),
+  h("p",{class:"lead"},"Your future is locked behind five missions. To escape, you'll make decisions, solve problems, and figure out what makes you, you."),
+  h("ul",{class:"rules"},
+   h("li",{},h("b",{},"No timers. "),"Take as long as you need."),
+   h("li",{},h("b",{},"No wrong answers. "),"You move forward by being honest — not by being \"right.\""),
+   h("li",{},h("b",{},"Your reward: "),"a Future Blueprint you can bring to your IEP meeting.")),
+  h("div",{class:"login panel"},h("div",{style:"display:grid;grid-template-columns:1fr 110px;gap:12px"},h("label",{class:"field"},h("span",{},"FIRST NAME"),name),h("label",{class:"field"},h("span",{},"LAST INITIAL"),init)),h("label",{class:"field"},h("span",{},"GRADE"),grade),err,h("button",{class:"btn primary big",onclick:start},"Begin ▶")),
+  h("p",{class:"fine"},"🔒 Your answers stay on this computer. Nothing is sent online."));
+}
+
+/* ---------- hub ---------- */
+function vHub(){
+ const n=doneCount(),all=n===5;
+ const keys=h("div",{class:"keys","aria-label":"Access code letters collected"},KEYS.map((k,i)=>h("div",{class:"keyslot"+(S.done[i]?" got":"")},S.done[i]?k:"?")));
+ const grid=h("div",{class:"mgrid"});
+ MISSIONS.forEach((M,i)=>{
+  const st=S.done[i]?"done":unlocked(i)?"open":"locked";
+  grid.append(h("button",{class:"mtile "+st,style:`--mc:${M.color}`,disabled:st==="locked",onclick:()=>enterMission(i),"aria-label":`Mission ${M.code}: ${M.name}. ${st==="done"?"Complete":st==="open"?"Ready":"Locked"}`},
+   h("div",{class:"mt-top mono"},h("span",{class:"mt-code"},"MISSION "+M.code),h("span",{class:"mt-status"},st==="done"?"✓ COMPLETE":st==="open"?"▶ READY":"🔒 LOCKED")),
+   h("div",{class:"mt-icon"},M.icon),h("h3",{},M.name),h("p",{},M.tag),
+   h("div",{class:"mt-foot small"},st==="locked"?`Finish Mission ${MISSIONS[i-1].code} to unlock`:st==="done"?"Tap to review or change answers":`About ${M.mins} minutes`)));
+ });
+ return h("section",{class:"hub"},
+  h("div",{class:"eyebrow mono"},"MISSION MAP"),
+  h("h1",{},all?`All locks open, ${first()}.`:n?`Keep going, Agent ${first()}.`:`Welcome, Agent ${first()}.`),
+  h("p",{class:"lead"},all?"You escaped. Your Future Blueprint is ready.":`${n} of 5 missions complete. Each mission earns one letter of the access code. Collect all five to unlock your future.`),
+  h("div",{class:"keybar panel"},h("span",{class:"mono small muted"},"ACCESS CODE"),keys,h("div",{class:"bigbar"},h("div",{class:"bigbar-fill",style:`width:${n*20}%`})),h("span",{class:"mono small"},`${n*20}% escaped`)),
+  grid,
+  all?h("div",{class:"center",style:"margin-top:22px"},h("button",{class:"btn primary big",onclick:()=>{S.view="complete";render();}},"View my Future Blueprint ▶")):null,
+  h("div",{class:"teacher-link"},h("button",{class:"linkbtn",onclick:()=>{S.back="hub";S.view="teacher";render();}},"Teacher: view IEP summary so far")));
+}
+function enterMission(i){S.m=i;S.s=0;S.enter=Date.now();S.view="mission";render();}
+function leaveMission(){if(S.enter){S.t[S.m]+=Date.now()-S.enter;S.enter=0;}}
+
+/* ---------- mission ---------- */
+function vMission(){
+ const M=MISSIONS[S.m],st=M.steps[S.s];
+ const stage=h("div",{class:"stage"});
+ cur=STEP[st.type](st,stage,M)||{};
+ const last=S.s===M.steps.length-1;
+ const back=h("button",{class:"btn ghost",onclick:()=>{if(S.s>0){S.s--;render();}else{leaveMission();S.view="hub";render();}}},S.s>0?"← Back":"← Map");
+ const next=h("button",{class:"btn primary",id:"nextBtn",onclick:onNext},st.type==="unlock"?"🔓 Unlock my future":last?"Complete mission ✓":S.s===0?"Start ▶":"Continue →");
+ return h("section",{class:"mission"},
+  h("div",{class:"mhead"},h("div",{class:"mh-left"},h("span",{class:"mono chip-code"},"MISSION "+M.code),h("span",{class:"mh-name"},M.icon+" "+M.name)),
+   h("div",{class:"dots",role:"img","aria-label":`Step ${S.s+1} of ${M.steps.length}`},M.steps.map((_,i)=>h("span",{class:"dot"+(i<S.s?" done":i===S.s?" cur":"")})))),
+  stage,
+  h("div",{class:"navbar"},h("div",{class:"navin"},back,h("div",{id:"hint",class:"hint small","aria-live":"polite"}),next)));
+}
+function onNext(){
+ if(cur.valid&&!cur.valid())return;
+ if(cur.onNext){cur.onNext(completeMission);return;}
+ const M=MISSIONS[S.m];
+ if(S.s<M.steps.length-1){S.s++;render();}else completeMission();
+}
+function completeMission(){
+ leaveMission();const i=S.m,firstTime=!S.done[i];S.done[i]=true;
+ if(i===4){S.finished=S.finished||Date.now();S.view="complete";render();if(firstTime)confetti();return;}
+ S.view="hub";
+ if(firstTime)award(i);else render();
+}
+function award(i){
+ const M=MISSIONS[i],nx=MISSIONS[i+1];
+ const btn=h("button",{class:"btn primary big",onclick:()=>{ov.remove();render();}},"Return to Mission Map ▶");
+ const ov=h("div",{class:"overlay",role:"dialog","aria-modal":"true","aria-label":"Key letter acquired"},
+  h("div",{class:"award"},h("div",{class:"eyebrow mono",style:"color:var(--lime)"},"MISSION "+M.code+" COMPLETE"),
+   h("h2",{},"Key letter acquired"),h("div",{class:"glyph"},KEYS[i]),
+   h("p",{},`Access code: ${KEYS.map((k,j)=>j<=i||S.done[j]?k:"_").join(" ")}`),
+   h("p",{class:"muted"},nx?`${nx.icon} ${nx.name} is now unlocked.`:""),btn));
+ render();document.body.append(ov);btn.focus();
+}
+
+/* ---------- step helpers ---------- */
+function head(el,st){if(st.title)el.append(h("div",{class:"eyebrow mono"},st.title.toUpperCase()));el.append(h("h2",{class:"prompt"},st.prompt));if(st.sub)el.append(h("p",{class:"sub"},st.sub));}
+function tbox(key,ph,rows){const e=h("textarea",{class:"tb",placeholder:ph||"",rows:rows||3,"aria-label":ph||"Your answer"});e.value=S.r[key]||"";e.addEventListener("input",()=>{S.r[key]=e.value;refresh();});return e;}
+function starterChips(ta,key,list,replace){return h("div",{class:"chips"},list.map(s=>h("button",{class:"chip",type:"button",onclick:()=>{const v=ta.value.trim();ta.value=replace||!v?s+(replace?"":" "):v+" "+s+" ";S.r[key]=ta.value;ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);refresh();}},s)));}
+function lab(stepId,id){const st=STEPS[stepId];if(!st)return id;const pool=st.options||st.cards||st.items||[];const o=pool.find(x=>x.id===id);return o?o.label:id;}
+function realText(v,starters,min){v=(v||"").trim();if(v.length<min)return false;const bare=v.replace(/[….\s]+$/,"");return !starters.some(s=>s.replace(/[….\s]+$/,"")===bare);}
+
+const STEP={
+ intro(st,el){el.append(h("div",{class:"intro"},h("div",{class:"intro-icon"},st.icon),h("div",{class:"eyebrow mono"},"MISSION BRIEFING"),h("h2",{},st.title),st.text.map(p=>h("p",{},p)),st.brief?h("ul",{class:"brief"},st.brief.map(b=>h("li",{},b))):null));return {};},
+
+ pick(st,el){
+  const sel=S.r[st.id]||(S.r[st.id]=[]);head(el,st);
+  const counter=h("div",{class:"counter",role:"status"});
+  const grid=h("div",{class:"grid "+(st.layout||"cards")});
+  st.options.forEach(o=>{const b=h("button",{class:"opt",type:"button",onclick:()=>{
+    const i=sel.indexOf(o.id);
+    if(i>=0)sel.splice(i,1);
+    else if(st.max===1){sel.length=0;sel.push(o.id);}
+    else if(sel.length>=st.max){counter.classList.remove("flash");void counter.offsetWidth;counter.classList.add("flash");counter.textContent=`You can choose ${st.max}. Tap one to swap it out.`;return;}
+    else sel.push(o.id);
+    sync();}},o.icon?h("span",{class:"ic"},o.icon):null,h("span",{},h("strong",{},o.label),o.desc?h("span",{class:"desc",style:"display:block"},o.desc):null));b._id=o.id;grid.append(b);});
+  function sync(){grid.querySelectorAll(".opt").forEach(b=>b.setAttribute("aria-pressed",sel.includes(b._id)?"true":"false"));counter.classList.remove("flash");counter.textContent=st.min===st.max?`${sel.length} of ${st.max} chosen`:st.min===0?(sel.length?"Chosen ✓":"Optional"):`${sel.length} chosen`;refresh();}
+  el.append(counter,grid);
+  if(st.other)el.append(h("label",{class:"field other"},h("span",{},st.other),tbox(st.id+"_other","Type it here",2)));
+  sync();
+  return {valid:()=>sel.length>=st.min&&sel.length<=st.max,hint:st.min===st.max?`Choose ${st.min} to continue`:`Choose at least ${st.min} to continue`};
+ },
+
+ examples(st,el){
+  head(el,st);const sel=S.r[st.from]||[];const src=STEPS[st.from];
+  sel.forEach(id=>{const o=src.options.find(x=>x.id===id);const key="ex_"+id;const ta=tbox(key,`My example of being ${o.label.toLowerCase()}…`,2);
+   el.append(h("div",{class:"exbox"},h("div",{class:"exhead"},o.icon+" ",h("strong",{},o.label)),h("div",{class:"muted small"},o.desc),starterChips(ta,key,st.starters),ta));});
+  return {valid:()=>sel.length>0&&sel.every(id=>realText(S.r["ex_"+id],st.starters,st.min)),hint:"Add a short real example for each strength"};
+ },
+
+ meter(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]={});const wrap=h("div",{class:"meters"});
+  st.items.forEach(it=>{
+   const segs=h("div",{class:"segs",role:"radiogroup","aria-label":it.label});const val=h("span",{class:"meter-val"});
+   for(let n=1;n<=5;n++){const b=h("button",{class:"seg",type:"button",role:"radio","aria-label":`${it.label}: ${st.labels[n-1]}`,title:st.labels[n-1],onclick:()=>{v[it.id]=n;paint();refresh();}});b._n=n;segs.append(b);}
+   function paint(){segs.querySelectorAll(".seg").forEach(b=>{b.classList.toggle("on",(v[it.id]||0)>=b._n);b.setAttribute("aria-checked",v[it.id]===b._n?"true":"false");});val.textContent=v[it.id]?st.labels[v[it.id]-1]:"—";}
+   paint();wrap.append(h("div",{class:"meter"},h("span",{},it.icon+" "+it.label),segs,val));});
+  el.append(wrap);
+  return {valid:()=>st.items.every(i=>v[i.id]),hint:"Set a power level for every row"};
+ },
+
+ scenario(st,el){
+  const v=S.r[st.id]||(S.r[st.id]={choice:null,fu:null});
+  el.append(h("div",{class:"alert"},h("div",{class:"alert-tag"},"⚠ INCOMING CHALLENGE"),h("h2",{},st.title),h("p",{class:"lead"},st.text)),h("h3",{class:"q"},"What do you do?"));
+  const opts=h("div",{class:"choices"}),fuBox=h("div",{class:"fu","aria-live":"polite"});
+  st.options.forEach((o,i)=>{const b=h("button",{class:"choice",type:"button",onclick:()=>{if(v.choice!==o.id){v.choice=o.id;v.fu=null;}paint();setTimeout(()=>fuBox.scrollIntoView({behavior:"smooth",block:"nearest"}),60);}},h("span",{class:"key"},"ABCD"[i]),h("span",{},o.label));b._id=o.id;opts.append(b);});
+  const fuOf=()=>{const o=st.options.find(x=>x.id===v.choice);return o&&(o.fu||st.fu);};
+  function paint(focusIdx){
+   opts.querySelectorAll(".choice").forEach(b=>b.setAttribute("aria-pressed",v.choice===b._id?"true":"false"));
+   fuBox.innerHTML="";
+   if(v.choice){const o=st.options.find(x=>x.id===v.choice),fu=fuOf();
+    if(o.log)fuBox.append(h("div",{class:"log"},h("span",{class:"log-tag"},"DECISION LOGGED · "),o.log));
+    if(fu){fuBox.append(h("h3",{class:"q"},"Follow-up: "+fu.q));
+     const g=h("div",{class:"chips big"});
+     fu.options.forEach((f,j)=>{const on=fu.multi?(v.fu||[]).includes(f):v.fu===f;g.append(h("button",{class:"chip",type:"button","aria-pressed":on?"true":"false",onclick:()=>{if(fu.multi){v.fu=Array.isArray(v.fu)?v.fu:[];const k=v.fu.indexOf(f);k>=0?v.fu.splice(k,1):v.fu.push(f);}else v.fu=f;paint(j);}},f));});
+     fuBox.append(g);if(focusIdx!=null)g.children[focusIdx].focus();}}
+   refresh();}
+  el.append(opts,fuBox);paint();
+  return {valid:()=>{if(!v.choice)return false;const fu=fuOf();if(!fu)return true;return fu.multi?Array.isArray(v.fu)&&v.fu.length>0:!!v.fu;},hint:"Make a choice, then answer the follow-up"};
+ },
+
+ sort(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]={});let picked=null;
+  const status=h("div",{class:"sort-status",role:"status"});
+  const tray=h("div",{class:"tray","aria-label":"Unsorted support cards"});const bins=h("div",{class:"bins"});const binEls={};
+  st.bins.forEach(b=>{const zone=h("div",{class:"bin-zone"});const cnt=h("span",{class:"bin-count mono"});
+   const be=h("div",{class:"bin",style:`--bc:${b.color}`},h("button",{class:"bin-head",type:"button",onclick:()=>place(b.id),"aria-label":`Place in ${b.label}`},h("span",{},b.icon+" "+b.label),cnt),zone);
+   be.addEventListener("dragover",e=>{e.preventDefault();be.classList.add("over");});be.addEventListener("dragleave",()=>be.classList.remove("over"));
+   be.addEventListener("drop",e=>{e.preventDefault();be.classList.remove("over");picked=e.dataTransfer.getData("text/plain");place(b.id);});
+   binEls[b.id]={zone,cnt};bins.append(be);});
+  function card(c){const e=h("button",{class:"tok"+(picked===c.id?" picked":""),type:"button",draggable:"true","aria-pressed":picked===c.id?"true":"false",onclick:()=>{picked=picked===c.id?null:c.id;status.textContent=picked?`Now tap a bin for “${c.label.replace(/^\S+\s/,"")}”.`:"";paint();}},c.label);
+   e._id=c.id;e.addEventListener("dragstart",ev=>{ev.dataTransfer.setData("text/plain",c.id);});return e;}
+  function place(bid){if(!picked){status.textContent="Tap a support card first, then tap a bin.";return;}v[picked]=bid;const nx=st.cards.find(c=>!v[c.id]);picked=nx?nx.id:null;status.textContent=nx?`Next up: “${nx.label.replace(/^\S+\s/,"")}” — tap a bin.`:"";paint();}
+  function paint(){tray.innerHTML="";Object.values(binEls).forEach(x=>x.zone.innerHTML="");
+   st.cards.forEach(c=>(v[c.id]?binEls[v[c.id]].zone:tray).append(card(c)));
+   st.bins.forEach(b=>binEls[b.id].cnt.textContent=st.cards.filter(c=>v[c.id]===b.id).length);
+   const left=st.cards.filter(c=>!v[c.id]).length;
+   if(!left)tray.append(h("span",{class:"tray-empty"},"✓ All supports sorted! Tap any card to move it."));
+   const p=(picked&&el.querySelector(".tok.picked"));if(p)p.focus({preventScroll:true});
+   refresh();}
+  picked=(st.cards.find(c=>!v[c.id])||{}).id||null;
+  el.append(h("div",{class:"small muted mono",style:"margin-bottom:6px"},"SUPPORT CARDS"),tray,status,bins);paint();
+  return {valid:()=>st.cards.every(c=>v[c.id]),hint:"Sort every support card into a bin"};
+ },
+
+ rank(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]=[]);
+  const slots=h("div",{class:"slots"}),pool=h("div",{class:"grid tiles"});
+  function paint(){slots.innerHTML="";pool.innerHTML="";
+   for(let i=0;i<st.pick;i++){const id=v[i];const o=st.options.find(x=>x.id===id);
+    slots.append(h("button",{class:"slot"+(o?" full":""),type:"button",disabled:!o,onclick:()=>{v.splice(i,1);paint();},"aria-label":o?`#${i+1}: ${o.label}. Tap to remove.`:`Slot ${i+1} empty`},h("span",{class:"n"},"#"+(i+1)),o?h("span",{},o.icon+" "+o.label):h("span",{class:"muted small"},"Empty"),o?h("span",{class:"x"},"✕"):null));}
+   st.options.forEach(o=>{const at=v.indexOf(o.id);pool.append(h("button",{class:"opt",type:"button","aria-pressed":at>=0?"true":"false",onclick:()=>{if(at>=0)v.splice(at,1);else if(v.length<st.pick)v.push(o.id);else{v[st.pick-1]=o.id;}paint();}},h("span",{class:"ic"},o.icon),h("strong",{},o.label)));});
+   refresh();}
+  el.append(slots,pool);paint();
+  return {valid:()=>v.length===st.pick,hint:`Choose your top ${st.pick} in order`};
+ },
+
+ rate(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]={});const wrap=h("div",{class:"rate"});
+  st.items.forEach(it=>{const opts=it.options||st.levels;const row=h("div",{class:"rate-row"});const g=h("div",{class:"rate-opts",role:"radiogroup","aria-label":it.label});
+   function paint(){row.classList.toggle("set",!!v[it.id]);g.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",v[it.id]===c._v?"true":"false"));}
+   opts.forEach(o=>{const c=h("button",{class:"chip",type:"button",role:"radio",onclick:()=>{v[it.id]=o;paint();refresh();}},o);c._v=o;g.append(c);});
+   paint();row.append(h("span",{style:"font-weight:600"},it.label),g);wrap.append(row);});
+  el.append(wrap);
+  return {valid:()=>st.items.every(i=>v[i.id]),hint:"Answer every row to continue"};
+ },
+
+ swipe(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]={});let i=st.cards.findIndex(c=>!v[c.id]);if(i<0)i=0;
+  const stage=h("div",{class:"swipe"}),list=h("div",{class:"swipe-list"}),banner=h("div",{});
+  function paint(){const c=st.cards[i];stage.innerHTML="";
+   stage.append(h("div",{class:"scard"},h("div",{class:"scard-n"},`CARD ${i+1} / ${st.cards.length}`),h("div",{class:"scard-ic"},c.icon),h("h3",{},c.label),h("p",{},c.desc),
+    h("div",{class:"facts"},
+     h("div",{class:"fact"},h("span",{class:"fl"},"💵 PAY"),h("span",{class:"fv"},h("b",{class:"tier"},payTier(c.pay)),` about $${c.pay}K a year`)),
+     h("div",{class:"fact"},h("span",{class:"fl"},"📚 TRAINING"),h("span",{class:"fv"},c.train)),
+     h("div",{class:"fact"},h("span",{class:"fl"},"🧠 SKILLS USED"),h("span",{class:"fv"},c.skills))),
+    h("div",{class:"scard-path"},"Field: "+c.cluster)),
+    h("div",{class:"swipe-btns"},st.choices.map(ch=>h("button",{class:"sbtn "+ch.cls,type:"button","aria-pressed":v[c.id]===ch.id?"true":"false",onclick:()=>{v[c.id]=ch.id;let nx=st.cards.findIndex((cc,j)=>j>i&&!v[cc.id]);if(nx<0)nx=st.cards.findIndex(cc=>!v[cc.id]);if(nx>=0)i=nx;paint();const f=stage.querySelector(".sbtn");if(f)f.focus({preventScroll:true});}},ch.icon+" "+ch.label))));
+   list.innerHTML="";st.cards.forEach((cc,j)=>list.append(h("button",{class:"mini "+(v[cc.id]||"")+(j===i?" cur":""),type:"button",onclick:()=>{i=j;paint();}},cc.icon+" "+cc.label)));
+   const left=st.cards.filter(cc=>!v[cc.id]).length;
+   banner.innerHTML="";if(!left)banner.append(h("div",{class:"banner"},"✓ All cards sorted! "+st.cards.filter(cc=>v[cc.id]==="yes").length+" marked Interested."));
+   refresh();}
+  el.append(banner,stage,h("p",{class:"small muted center",style:"margin:-4px 0 10px"},"💵 Pay is the approximate middle U.S. yearly pay. Starting pay is usually lower, and pay varies by state."),h("div",{class:"small muted"},"Tap any career below to see it again or change your answer."),list);paint();
+  return {valid:()=>st.cards.every(c=>v[c.id]),hint:"Make a call on every career card"};
+ },
+
+ thisorthat(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]={});const wrap=h("div",{class:"tot"});
+  st.pairs.forEach(p=>{const row=h("div",{class:"tot-row",role:"radiogroup"});
+   const mk=(k,txt,cls)=>{const b=h("button",{class:"tot-btn"+(cls?" "+cls:""),type:"button",role:"radio",onclick:()=>{v[p.id]=k;paint();refresh();}},txt);b._k=k;return b;};
+   row.append(mk("a",p.a),mk("either","Either","mid"),mk("b",p.b));
+   function paint(){row.querySelectorAll(".tot-btn").forEach(b=>b.setAttribute("aria-pressed",v[p.id]===b._k?"true":"false"));}
+   paint();wrap.append(row);});
+  el.append(wrap);
+  return {valid:()=>st.pairs.every(p=>v[p.id]),hint:"Pick a side for every pair"};
+ },
+
+ text(st,el){
+  head(el,st);const ta=tbox(st.id,st.ph,4);
+  el.append(starterChips(ta,st.id,st.starters),ta);
+  return {valid:()=>st.optional||realText(S.r[st.id],st.starters,st.min),hint:"Write a little more to continue"};
+ },
+
+ budget(st,el){
+  head(el,st);const v=S.r[st.id]||(S.r[st.id]=Object.fromEntries(st.cats.map(c=>[c.id,0])));
+  const spentV=h("div",{class:"val"}),leftV=h("div",{class:"val"}),leftBox=h("div",{class:"wbox"},h("div",{class:"lab"},"LEFT OVER"),leftV),msg=h("div",{class:"budget-msg",role:"status"});
+  el.append(h("div",{class:"wallet"},h("div",{class:"wbox ok"},h("div",{class:"lab"},"PAYCHECK"),h("div",{class:"val"},"$"+st.income.toLocaleString())),h("div",{class:"wbox"},h("div",{class:"lab"},"PLANNED"),spentV),leftBox));
+  st.cats.forEach(c=>{const amt=h("span",{class:"amt"});const r=h("input",{type:"range",min:0,max:1500,step:25,"aria-label":c.label});r.value=v[c.id]||0;
+   const upd=()=>{amt.textContent="$"+(+r.value).toLocaleString();};upd();
+   r.addEventListener("input",()=>{v[c.id]=+r.value;upd();tot();});
+   el.append(h("div",{class:"brow"},h("label",{},c.icon+" "+c.label,h("span",{class:"typ"},c.typ)),r,amt));});
+  el.append(msg);
+  function tot(){const s=Object.values(v).reduce((a,b)=>a+b,0),left=st.income-s;spentV.textContent="$"+s.toLocaleString();leftV.textContent=(left<0?"−$":"$")+Math.abs(left).toLocaleString();leftBox.className="wbox "+(left<0?"bad":"ok");
+   msg.textContent=left<0?`⚠ You're over budget by $${Math.abs(left).toLocaleString()}. In real life you'd need to cut something — try adjusting.`:left===0?"✓ Every dollar has a job.":s>0?`You have $${left.toLocaleString()} not planned yet.`:"";msg.style.color=left<0?"var(--red)":"var(--lime)";refresh();}
+  tot();
+  return {valid:()=>Object.values(v).filter(x=>x>0).length>=3,hint:"Plan money for at least 3 categories"};
+ },
+
+ blueprint(st,el){
+  head(el,st);const r=S.r;
+  const strengths=(r.strengths||[]).map(id=>lab("strengths",id));
+  const yes=Object.entries(r.careers||{}).filter(([,x])=>x==="yes").map(([id])=>lab("careers",id));
+  const careerOpts=[...yes];const dj=(r.dreamjob||"").trim();if(dj)careerOpts.unshift(dj.length>70?dj.slice(0,67)+"…":dj);careerOpts.push("Still exploring");
+  const helps=Object.entries(r.supports||{}).filter(([,x])=>x==="alot").map(([id])=>lab("supports",id).replace(/^\S+\s/,""));
+  const supOpts=helps.length?helps:SUPPORTS.map(s=>s.label.replace(/^\S+\s/,""));
+  for(const k of["bp_career","bp_next","bp_support"])if(r[k]&&![...careerOpts,...NEXT_STEPS,...supOpts].includes(r[k]))delete r[k];
+  const chipGroup=(key,opts)=>{const g=h("div",{class:"chips big",role:"radiogroup"});const p=()=>g.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",r[key]===c._v?"true":"false"));opts.forEach(o=>{const c=h("button",{class:"chip",type:"button",role:"radio",onclick:()=>{r[key]=o;p();refresh();}},o);c._v=o;g.append(c);});p();return g;};
+  const goal=tbox("bp_goal","My goal this year is to…",2);
+  el.append(h("div",{class:"bpb"},
+   h("div",{class:"bpb-sec"},h("h3",{},"💪 My strengths"),h("p",{class:"small muted",style:"margin:0 0 8px"},"From the Identity Vault."),h("div",{class:"tagrow"},strengths.map(s=>h("span",{class:"tag"},s)))),
+   h("div",{class:"bpb-sec"},h("h3",{},"🚀 My career interest"),h("p",{class:"small muted",style:"margin:0"},"Your dream job and the careers you marked Interested."),chipGroup("bp_career",careerOpts)),
+   h("div",{class:"bpb-sec"},h("h3",{},"👣 My next step"),h("p",{class:"small muted",style:"margin:0"},"What's one thing you could do this year to move toward it?"),chipGroup("bp_next",NEXT_STEPS)),
+   h("div",{class:"bpb-sec"},h("h3",{},"🧰 A support that helps me"),h("p",{class:"small muted",style:"margin:0"},helps.length?"From the supports you said help a lot.":"Pick the one you think would help most."),chipGroup("bp_support",supOpts)),
+   h("div",{class:"bpb-sec"},h("h3",{},"🎯 My personal goal"),h("p",{class:"small muted",style:"margin:0"},"Tap one or write your own."),starterChips(goal,"bp_goal",GOAL_STARTERS,true),goal)));
+  return {valid:()=>r.bp_career&&r.bp_next&&r.bp_support&&(r.bp_goal||"").trim().length>=6,hint:"Choose one answer in each part and add your goal"};
+ },
+
+ unlock(st,el){
+  const v=h("div",{class:"vault"},h("div",{class:"eyebrow mono"},"FINAL LOCK"),h("h2",{},"All five key letters collected."),
+   h("div",{class:"keys"},KEYS.map(k=>h("div",{class:"keyslot got"},k))),
+   h("div",{class:"vault-door",html:LOCK_SVG}),
+   h("p",{class:"lead center"},"Your blueprint is built. Enter the code and open the door."));
+  el.append(v);
+  return {onNext(done){const b=$("#nextBtn");b.disabled=true;b.textContent="Unlocking…";v.classList.add("opening");setTimeout(done,matchMedia("(prefers-reduced-motion: reduce)").matches?100:2500);}};
+ }
+};
+
+/* ================= REPORTS ================= */
+const NEED="Additional information needed";
+const noEmo=s=>String(s).replace(/^[^\w\s"“(]+\s+/u,"");
+const joinL=a=>a&&a.length?a.join(", "):null;
+const fmtDate=t=>new Date(t).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+const quote=s=>s&&s.trim()?"“"+s.trim()+"”":null;
+function scen(id){const st=STEPS[id],v=S.r[id];if(!v||!v.choice)return null;const o=st.options.find(x=>x.id===v.choice);const fu=o.fu||st.fu;let s="Chose: "+o.label+".";if(fu&&v.fu)s+=" "+fu.q.replace(/\s*\(.*\)$/,"")+" → "+(Array.isArray(v.fu)?v.fu.join("; "):v.fu)+".";return s;}
+function byVal(stepId,val){const o=S.r[stepId]||{};return Object.keys(o).filter(k=>o[k]===val).map(k=>noEmo(lab(stepId,k)));}
+function pickL(stepId){return (S.r[stepId]||[]).map(id=>lab(stepId,id));}
+function rankL(stepId){const a=S.r[stepId]||[];return a.length?a.map((id,i)=>`${i+1}. ${lab(stepId,id)}`).join("   "):null;}
+
+function careerMix(field,fmt){const st=STEPS.careers,v=S.r.careers||{};const yes=st.cards.filter(c=>v[c.id]==="yes");if(!yes.length)return null;const m={};yes.forEach(c=>{const k=fmt(c[field]);m[k]=(m[k]||0)+1;});return Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`${k} (${n})`).join(", ");}
+function teacherData(){
+ const r=S.r,sec=[],notes=[];
+ const add=(cat,items)=>sec.push({cat,items});
+ const power=r.power||{},PL=STEPS.power.labels;
+ const hi=STEPS.power.items.filter(i=>power[i.id]>=4).map(i=>i.label),lo=STEPS.power.items.filter(i=>power[i.id]&&power[i.id]<=2).map(i=>i.label);
+ const ms=S.t.reduce((a,b)=>a+b,0),mins=ms?Math.max(1,Math.round(ms/60000)):0;
+ add("Student information",[["Student",S.name||null],["Grade",S.grade||"—"],["Date",fmtDate(S.finished||Date.now())],["Missions completed",`${doneCount()} of 5`],["Approximate time in activity",mins?mins+" minutes":"—"]]);
+
+ const strengths=(r.strengths||[]).map(id=>["Strength: "+lab("strengths",id),quote(r["ex_"+id])?"Example: "+quote(r["ex_"+id]):"Selected (no example given)"]);
+ add("Academic & personal strengths",[...(strengths.length?strengths:[["Self-identified strengths",null]]),["Areas rated Strong / Maxed",joinL(hi)],["Preferred ways to learn (ranked)",rankL("learnways")]]);
+ add("Personal interests",[["Interests selected",joinL(pickL("interests"))],["Other interests",(r.interests_other||"").trim()||"—"]]);
+ add("Self-rated confidence (1–5)",STEPS.power.items.map(i=>[i.label,power[i.id]?`${PL[power[i.id]-1]} (${power[i.id]}/5)`:null]));
+ const testFu=r.sc_test&&Array.isArray(r.sc_test.fu)?r.sc_test.fu:[];
+ add("Academic needs & areas for growth",[["Areas student wants to improve",joinL(pickL("growth"))],["Areas rated Low / Building",joinL(lo)||"None rated below OK"],["What makes tests hardest",joinL(testFu)]]);
+ add("Learning barriers — classroom scenario responses",["sc_crisis","sc_test","sc_distract","sc_absent"].map(id=>[STEPS[id].title+" ("+STEPS[id].text.split(".")[0]+")",scen(id)]));
+ const hl=byVal("supports","alot"),hs=byVal("supports","some"),hn=byVal("supports","no"),hv=byVal("supports","never");
+ add("Supports & perceived accommodation effectiveness",[["Helps a lot",joinL(hl)],["Helps sometimes",joinL(hs)],["Does not help",joinL(hn)],["Has not tried",joinL(hv)],["Preferred focus environment",r.sc_distract&&r.sc_distract.fu||null],["Support chosen for blueprint",r.bp_support||null]]);
+ const sa=r.selfadv||{};
+ add("Self-advocacy",[...STEPS.selfadv.items.map(i=>[i.label,sa[i.id]||null]),["Comfort asking adults for help",r.sc_absent&&r.sc_absent.fu||null],["In the IEP meeting, student wants to",joinL(pickL("meeting"))]]);
+ const nk=r.nextknow||{};const nkRow=id=>[lab("nextknow",id),nk[id]||null];
+ add("Postsecondary education / training",[["Primary pathway",(r.pathway||[]).length?lab("pathway",r.pathway[0]):null],["Backup pathway",(r.backup||[]).length&&r.backup[0]!==(r.pathway||[])[0]?lab("backup",r.backup[0]):"None selected"],nkRow("train"),nkRow("applySchool"),nkRow("who")]);
+ const env=r.workenv||{};
+ const envL=STEPS.workenv.pairs.map(p=>env[p.id]==="either"?null:env[p.id]?noEmo(p[env[p.id]]):null).filter(Boolean);
+ add("Postsecondary employment & career interests",[["Careers marked Interested",joinL(byVal("careers","yes"))],["Careers marked Maybe",joinL(byVal("careers","maybe"))],["Training levels of Interested careers",careerMix("tl",t=>TL[t])],["Fields of Interested careers",careerMix("cluster",x=>x)],["Pay levels of Interested careers",careerMix("pay",k=>payTier(k))],["Dream job (student's words)",quote(r.dreamjob)],["Career interest chosen for blueprint",r.bp_career||null],["Preferred work environment",joinL(envL)||(Object.keys(env).length?"No strong preferences":null)],["Work experience",joinL(pickL("workexp"))],nkRow("applyJob"),nkRow("resume"),nkRow("interview"),nkRow("pay")]);
+ const b=r.budget||{};const bt=Object.values(b).reduce((a,c)=>a+c,0);
+ const bStr=bt?STEPS.budget.cats.map(c=>`${c.label} $${(b[c.id]||0).toLocaleString()}`).join("; "):null;
+ const ls=r.lifeskills||{};
+ add("Independent living — functional skills & problem-solving",[
+  ["Monthly budget plan ($2,000 income)",bStr?bStr+`. Total planned: $${bt.toLocaleString()} (${bt>2000?"over by $"+(bt-2000).toLocaleString():bt<2000?"$"+(2000-bt).toLocaleString()+" unplanned":"balanced"}).`:null],
+  ["Current money management",joinL(pickL("money"))],
+  ...["rs_ride","rs_late","rs_bill","rs_sick","rs_leak"].map(id=>[STEPS[id].title,scen(id)]),
+  ["Life skills: “I've got this”",joinL(byVal("lifeskills","I've got this"))||(Object.keys(ls).length?"None":null)],
+  ["Life skills: “Need some help”",joinL(byVal("lifeskills","Need some help"))||(Object.keys(ls).length?"None":null)],
+  ["Life skills: “Need to learn”",joinL(byVal("lifeskills","Need to learn"))||(Object.keys(ls).length?"None":null)],
+  ["Planned living situation",(r.living||[]).length?lab("living",r.living[0]):null]]);
+ add("Student priorities & vision",[["Priorities for annual goals (ranked)",rankL("priorities")],["Personal goal",quote(r.bp_goal)],["Next step student chose",r.bp_next||null],["Vision (5 years)",quote(r.vision)],["What student wants the team to know",quote(r.teamknow)||"—"]]);
+
+ // discussion points
+ const indepNot=["rs_ride","rs_late","rs_bill","rs_sick","rs_leak"].filter(id=>r[id]&&r[id].fu&&/^Not yet/.test(r[id].fu)).map(id=>STEPS[id].title);
+ if(sa.knowAcc&&sa.knowAcc!=="Yes, most of them")notes.push(`Student reports knowing ${sa.knowAcc==="Some of them"?"some":"few or none"} of their IEP accommodations — consider reviewing accommodations with the student before or during the meeting.`);
+ if(r.sc_crisis&&r.sc_crisis.choice==="wait")notes.push(`When directions are unclear, student chose to wait; follow-up: “${r.sc_crisis.fu||"—"}.” Consider discussing strategies for requesting clarification.`);
+ if(r.sc_absent&&r.sc_absent.choice==="quiet")notes.push("After missing class, student chose to say nothing and try to keep up — a possible self-advocacy discussion point.");
+ if(sa.speakUp==="Nervous"||sa.speakUp==="I'd rather not")notes.push(`Student describes feeling “${sa.speakUp}” about speaking up for needs; consider a self-advocacy goal or a supported way to participate in the meeting.`);
+ if(hv.length)notes.push(`Supports the student has not tried: ${hv.join(", ")}. Team may discuss whether a trial is appropriate.`);
+ if(hn.length)notes.push(`Supports the student reports do not help: ${hn.join(", ")}. Consider reviewing whether these remain appropriate.`);
+ if(lo.length)notes.push(`Lower self-rated confidence: ${lo.join(", ")}.`);
+ if(r.pathway&&r.pathway[0]==="unsure")notes.push("Student is still deciding on a postsecondary pathway; additional career exploration or interest inventories may support planning.");
+ const notYet=Object.keys(nk).filter(k=>nk[k]==="Not yet").map(k=>lab("nextknow",k));
+ if(notYet.length>=2)notes.push(`Student reports not yet knowing: ${notYet.join("; ")}. These may inform transition activities.`);
+ if((r.workexp||[]).includes("none"))notes.push("Student reports no work experience yet; work-based learning opportunities may be worth discussing.");
+ const need=byVal("lifeskills","Need to learn");if(need.length)notes.push(`Life skills student wants to learn: ${need.join(", ")}. Possible areas for independent-living instruction.`);
+ if(indepNot.length)notes.push(`Student reports they could not yet handle these situations independently: ${indepNot.join(", ")}.`);
+ if(bt>2000)notes.push(`Student's practice budget exceeded income by $${(bt-2000).toLocaleString()} — possible financial-literacy discussion point.`);
+ notes.push("Confirm student-reported information with formal transition assessments, observations, and family input.");
+
+ // at a glance
+ const ws=(r.workexp||[]);
+ const glance=[
+  ["Academic strengths",(r.strengths||[]).length?`Identifies as ${joinL(pickL("strengths"))}`+((r.learnways||[]).length?`; learns best by ${lab("learnways",r.learnways[0]).toLowerCase()}`:"")+".":null],
+  ["Academic needs",[pickL("growth").length?"Wants to improve "+joinL(pickL("growth")).toLowerCase():null,lo.length?"lower confidence in "+lo.join(", ").toLowerCase():null].filter(Boolean).join("; ")||null],
+  ["Supports",hl.length?"Reports these help a lot: "+hl.join(", ")+".":null],
+  ["Self-advocacy",sa.speakUp?`Feels “${sa.speakUp}” speaking up; knows accommodations: “${sa.knowAcc||"—"}.”`+(r.bp_goal?` Goal: “${r.bp_goal.trim()}.”`:""):null],
+  ["Postsecondary employment",(r.bp_career||byVal("careers","yes").length)?(r.bp_career&&r.bp_career!=="Still exploring"?`Career interest: “${r.bp_career}”`:`Interested in ${joinL(byVal("careers","yes"))||"still exploring"}`)+(ws.length&&!ws.includes("none")?`; experience: ${joinL(pickL("workexp")).toLowerCase()}.`:"; no work experience yet."):null],
+  ["Education / training",(r.pathway||[]).length?`Plans: ${lab("pathway",r.pathway[0])}`+((r.backup||[]).length&&r.backup[0]!==r.pathway[0]?`; backup: ${lab("backup",r.backup[0])}.`:"."):null],
+  ["Independent living",Object.keys(ls).length?(need.length?`Wants to learn: ${need.join(", ")}.`:"Reports independence or partial independence in listed skills.")+((r.living||[]).length?` Plans to live: ${lab("living",r.living[0]).toLowerCase()}.`:""):null]];
+ return {sections:sec,notes,glance};
+}
+
+function blueprintData(){
+ const r=S.r;
+ const strengths=(r.strengths||[]).map(id=>lab("strengths",id));
+ const ex=(r.strengths||[]).map(id=>(r["ex_"+id]||"").trim()?`${lab("strengths",id)}: ${(r["ex_"+id]||"").trim()}`:null).filter(Boolean);
+ const helps=byVal("supports","alot");
+ return [
+  {l:"My strengths",i:"💪",v:joinL(strengths),wide:false},
+  {l:"My career interest",i:"🚀",v:r.bp_career},
+  {l:"My path after high school",i:"🧭",v:(r.pathway||[]).length?lab("pathway",r.pathway[0]):null},
+  {l:"My next step",i:"👣",v:r.bp_next},
+  {l:"A support that helps me",i:"🧰",v:r.bp_support?r.bp_support+(helps.length>1?`\nAlso helps: ${helps.filter(x=>x!==r.bp_support).join(", ")}`:""):null},
+  {l:"My personal goal",i:"🎯",v:(r.bp_goal||"").trim()||null},
+  {l:"How I learn best",i:"🧠",v:(r.learnways||[]).map(id=>lab("learnways",id)).join(" → ")||null},
+  {l:"I want my IEP team to focus on",i:"📌",v:(r.priorities||[]).map((id,i)=>`${i+1}. ${lab("priorities",id)}`).join("\n")||null},
+  {l:"Things I'm into",i:"⭐",v:joinL(pickL("interests").concat((r.interests_other||"").trim()?[(r.interests_other||"").trim()]:[]))},
+  {l:"In my IEP meeting, I want to",i:"🎤",v:joinL(pickL("meeting"))},
+  {l:"Life skills I've got",i:"✅",v:joinL(byVal("lifeskills","I've got this"))},
+  {l:"Life skills I want to learn",i:"📈",v:joinL(byVal("lifeskills","Need to learn").concat(byVal("lifeskills","Need some help")))},
+  {l:"Proof of my strengths",i:"🔎",v:ex.join("\n")||null,wide:true},
+  {l:"My vision for after graduation",i:"🌅",v:(r.vision||"").trim()||null,wide:true},
+  {l:"What I want my team to know",i:"💬",v:(r.teamknow||"").trim()||null,wide:true}
+ ].filter(x=>x.v);
+}
+
+/* ---- documents (print / download) ---- */
+function blueprintDoc(){
+ const d=blueprintData();
+ return h("div",{class:"pd"},
+  h("div",{class:"pd-head"},h("div",{},h("div",{class:"pd-kicker"},"UNLOCK YOUR FUTURE · MISSION COMPLETE"),h("h1",{},"My Future Blueprint")),h("div",{class:"pd-meta"},h("strong",{},S.name),h("br"),(S.grade?"Grade "+S.grade+" · ":"")+fmtDate(S.finished||Date.now()))),
+  h("div",{class:"pd-bp"},d.map(x=>h("div",{class:"pd-box"+(x.wide?" wide":"")},h("div",{class:"l"},x.i+" "+x.l),h("div",{class:"v"},x.v)))),
+  h("p",{class:"pd-sign"},"I'll bring this blueprint to my IEP meeting.  Signature: ________________________"));
+}
+function teacherDoc(){
+ const d=teacherData();
+ const tbl=(title,items,cls)=>h("table",{class:"pd-table"},h("thead",{},h("tr",{},h("th",{colspan:"2"},title))),h("tbody",{},items.map(([k,v])=>h("tr",{},h("td",{class:"k"},k),h("td",{class:v?"":"need"},v||NEED)))));
+ return h("div",{class:"pd"},
+  h("div",{class:"pd-head"},h("div",{},h("div",{class:"pd-kicker"},"IEP PREPARATION SUMMARY · STUDENT INPUT"),h("h1",{},S.name||"Student")),h("div",{class:"pd-meta"},(S.grade?"Grade "+S.grade+" · ":"")+fmtDate(S.finished||Date.now()),h("br"),`${doneCount()}/5 missions completed`)),
+  h("p",{class:"pd-disc"},h("strong",{},"Self-reported information. "),"These responses come from the student-facing “Unlock Your Future” activity. They are the student's own perspective — not independently verified findings or automatically generated IEP determinations. Use alongside formal transition assessments and other IEP data sources."),
+  tbl("At a glance",d.glance),
+  h("h2",{},"Transition-planning discussion points"),h("ul",{},d.notes.map(n=>h("li",{},n))),
+  d.sections.map(s=>tbl(s.cat,s.items)),
+  h("p",{class:"pd-sign"},"Store this summary only in your district-approved system."));
+}
+function printDoc(node){const p=$("#print");p.innerHTML="";p.append(node);window.print();}
+function fileBase(kind){return `${kind}_${(S.name||"student").replace(/[^\w-]+/g,"_")}_${new Date().toISOString().slice(0,10)}`;}
+function download(name,content,type){const b=new Blob([content],{type});const a=h("a",{href:URL.createObjectURL(b),download:name});document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);S.saved=true;}
+function htmlFile(title,nodes){return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>${title}</title><style>body{margin:24px auto;max-width:900px;padding:0 16px;background:#fff}${$("#pdcss").textContent}@media print{body{margin:0}}</style></head><body>${nodes.map(n=>n.outerHTML).join('<div class="pd-break"></div>')}</body></html>`;}
+function csv(){
+ const d=teacherData(),rows=[["Category","Item","Student response"]];
+ d.glance.forEach(([k,v])=>rows.push(["At a glance",k,v||NEED]));
+ d.sections.forEach(s=>s.items.forEach(([k,v])=>rows.push([s.cat,k,v||NEED])));
+ d.notes.forEach(n=>rows.push(["Discussion points","",n]));
+ return "﻿"+rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+}
+
+/* ---------- complete & teacher views ---------- */
+function vComplete(){
+ const d=blueprintData();
+ return h("section",{},
+  h("div",{class:"eyebrow mono",style:"color:var(--lime)"},"ACCESS CODE ACCEPTED · R E A D Y"),
+  h("h1",{},`You unlocked your future, ${first()}.`),
+  h("p",{class:"lead"},"This is your Future Blueprint — built from your own answers. Print it or save it as a PDF and bring it to your IEP meeting so you can help lead the conversation."),
+  h("div",{class:"actions"},
+   h("button",{class:"btn primary",onclick:()=>printDoc(blueprintDoc())},"🖨 Print / Save as PDF"),
+   h("button",{class:"btn",onclick:()=>download(fileBase("Future_Blueprint")+".html",htmlFile("My Future Blueprint – "+S.name,[blueprintDoc()]),"text/html")},"⬇ Download blueprint"),
+   h("button",{class:"btn",onclick:()=>{S.back="complete";S.view="teacher";render();}},"📋 Teacher IEP summary"),
+   h("button",{class:"btn ghost",onclick:()=>{S.view="hub";render();}},"🗺 Mission map")),
+  h("div",{class:"bp"},h("div",{class:"bp-in"},
+   h("div",{class:"bp-head"},h("div",{},h("div",{class:"eyebrow mono"},"FUTURE READY PROFILE"),h("h2",{},S.name)),h("div",{class:"mono small muted"},(S.grade?"GRADE "+S.grade+" · ":"")+fmtDate(S.finished||Date.now()).toUpperCase())),
+   h("div",{class:"bp-grid"},d.map(x=>h("div",{class:"bp-item"+(x.wide?" wide":"")},h("div",{class:"lab"},x.i+" "+x.l),h("div",{class:"val"},x.v)))))),
+  h("p",{class:"note"},"✋ When you're done, ask your teacher to open the Teacher IEP summary and save it. Then close this tab — your answers aren't saved anywhere else."));
+}
+function vTeacher(){
+ return h("section",{},
+  h("div",{class:"eyebrow mono"},"FOR THE CASE MANAGER"),
+  h("h1",{},"IEP Preparation Summary"),
+  h("p",{class:"lead"},`${S.name||"Student"}'s responses, organized into IEP-relevant categories.`),
+  h("div",{class:"note"},"🔒 Contains sensitive educational information. Save or upload it only to your district-approved system. Nothing in this activity is sent online."),
+  h("div",{class:"actions"},
+   h("button",{class:"btn primary",onclick:()=>printDoc(teacherDoc())},"🖨 Print / Save as PDF"),
+   h("button",{class:"btn",onclick:()=>download(fileBase("IEP_Summary")+".html",htmlFile("IEP Preparation Summary – "+S.name,[teacherDoc(),blueprintDoc()]),"text/html")},"⬇ Summary + blueprint (.html)"),
+   h("button",{class:"btn",onclick:()=>download(fileBase("IEP_Responses")+".csv",csv(),"text/csv")},"⬇ Responses (.csv)"),
+   h("button",{class:"btn ghost",onclick:()=>{S.view=S.back||"hub";render();}},"← Back"),
+   h("button",{class:"btn ghost",onclick:resetAll},"↺ New student")),
+  h("div",{class:"paper"},teacherDoc()));
+}
+function resetAll(){if(!confirm("Start over for a new student? Make sure this student's summary and blueprint are saved first — all answers on this computer will be cleared."))return;
+ Object.assign(S,{view:"title",name:"",first:"",init:"",grade:"",m:0,s:0,done:[false,false,false,false,false],r:{},t:[0,0,0,0,0],enter:0,started:null,finished:null,back:"hub",saved:false});render();}
+
+/* ---------- tools ---------- */
+const synth=window.speechSynthesis;
+function stopSpeak(){if(synth&&synth.speaking)synth.cancel();const b=$("#readBtn");if(b)b.setAttribute("aria-pressed","false");}
+function speak(){if(!synth)return;if(synth.speaking){stopSpeak();return;}
+ const root=$("#app .stage")||$("#app");let txt=root.innerText.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu,"").replace(/\n{2,}/g,"\n").slice(0,5000);
+ const u=new SpeechSynthesisUtterance(txt);u.rate=.95;u.onend=u.onerror=()=>$("#readBtn").setAttribute("aria-pressed","false");synth.speak(u);$("#readBtn").setAttribute("aria-pressed","true");}
+if(!synth)$("#readBtn").hidden=true;
+$("#readBtn").onclick=speak;
+const SIZES=[17,19,21];let sz=0;
+$("#sizeBtn").onclick=()=>{sz=(sz+1)%SIZES.length;document.documentElement.style.setProperty("--fs",SIZES[sz]+"px");};
+$("#mapBtn").onclick=()=>{if(S.view==="mission")leaveMission();S.view="hub";render();};
+window.addEventListener("beforeunload",e=>{if(S.name&&!S.saved){e.preventDefault();e.returnValue="";}});
+
+function confetti(){
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const c=$("#confetti");c.hidden=false;const x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+ const cols=["#3be3ff","#ff5ad9","#6dffa0","#ffcb52","#a796ff"];
+ const P=Array.from({length:160},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:4+Math.random()*6,r:Math.random()*6,c:cols[Math.random()*5|0]}));
+ const t0=performance.now();
+ (function f(t){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore();});
+  if(t-t0<3500)requestAnimationFrame(f);else{x.clearRect(0,0,c.width,c.height);c.hidden=true;}})(t0);
+}
+
+render();
+</script>
+</body>
+</html>
